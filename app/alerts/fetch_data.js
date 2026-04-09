@@ -6,21 +6,15 @@ const combine_dictionary_data = require('./combine_dictionary_data');
 const fetch_watches = require('./watches/watches');
 const fetch_discussions = require('./discussions/discussions');
 
-const url_prefix = 'https://atticradar.steepatticstairs.net/';
-
-const new_alerts_url = `https://preview.weather.gov/edd/resource/edd/hazards/getShortFusedHazards.php?all=true`;
-const sws_alerts_url = `https://preview.weather.gov/edd/resource/edd/hazards/getSps.php`;
-// https://realearth.ssec.wisc.edu/products/?app=_ALL_
-const all_alerts_url = `https://realearth.ssec.wisc.edu/api/shapes?products=NWS-Alerts-All`;
 const noaa_alerts_url = `https://api.weather.gov/alerts/active`;
 
-// previously, these were written as:
-// "../app/alerts/zones/forecast_zones.js.gz"
-// but that didn't work when pushed to github pages
+// Use root-relative paths so zone files are served from the local server.
+// Previously fetched from 'https://atticradar.steepatticstairs.net/' which
+// caused CORS failures when running on localhost.
 const zone_urls = [
-    `${url_prefix}app/alerts/zones/forecast_zones.js.gz`,
-    `${url_prefix}app/alerts/zones/county_zones.js.gz`,
-    `${url_prefix}app/alerts/zones/fire_zones.js.gz`,
+    '/app/alerts/zones/forecast_zones.js.gz',
+    '/app/alerts/zones/county_zones.js.gz',
+    '/app/alerts/zones/fire_zones.js.gz',
 ];
 
 var headers = new Headers();

@@ -313,7 +313,7 @@ async function loadReports($c) {
         $c.find('.pgBarSub').text(_cachedReports.length + ' reports in past 24h');
     } catch (e) {
         $('#pgReportsList').html(pgError('Failed to load reports: ' + e.message +
-            '. Make sure server.cjs is running (npm start).'));
+            '. Please make sure the local reports service is running.'));
     }
 }
 

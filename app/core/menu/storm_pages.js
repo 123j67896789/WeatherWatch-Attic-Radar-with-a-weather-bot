@@ -36,7 +36,7 @@ function buildEmbedSrc(pageKey) {
 
 function triggerAction(action) {
     if (action === 'preview') {
-        $('#stormGridPreviewToggle').trigger('click');
+        $(document).trigger('storm-grid-preview:show');
     } else if (action === 'close-pages') {
         $('#stormPagesClose').trigger('click');
     } else if (action === 'settings') {
@@ -51,9 +51,7 @@ function triggerAction(action) {
         $('#armrRadarVisBtnSwitchElem').trigger('click');
     } else if (action === 'native-radar') {
         closePages();
-        if (!$('#stormGridPreview').is(':visible')) {
-            setTimeout(() => $('#stormGridPreviewToggle').trigger('click'), 60);
-        }
+        setTimeout(() => $(document).trigger('storm-grid-preview:show'), 80);
     } else if (action === 'spc') {
         $('#settingsItemClass').trigger('click');
         setTimeout(() => $('#armrSPCOutlooksBtn').trigger('click'), 50);
@@ -83,6 +81,8 @@ function renderContent() {
     const page = PAGE_DEFS.find((item) => item.key === activeKey) || PAGE_DEFS[0];
     $('#stormPagesNow').text(`Now: ${page.title}`);
     const $panel = $('#stormPagesShell .stormPagesPanel');
+    const $topbar = $('#stormPagesShell .stormPagesTopbar');
+    const $tabbar = $('#stormPagesShell .stormPagesTabbar');
 
     const actions = (page.actions || []).map((item) => {
         if (item.href) {
@@ -97,6 +97,13 @@ function renderContent() {
 
     const shouldEmbedGrid = page.key !== 'radar';
     $panel.toggleClass('stormPagesGridMode', shouldEmbedGrid);
+    if (shouldEmbedGrid) {
+        $topbar.hide();
+        $tabbar.hide();
+    } else {
+        $topbar.show();
+        $tabbar.show();
+    }
 
     $('#stormPagesContent').html(shouldEmbedGrid ? `
         <section class="stormPagesStage">
@@ -131,13 +138,14 @@ function renderPages() {
 
 function openPages() {
     renderPages();
-    $('#stormPagesShell').fadeIn(150);
+    $(document).trigger('storm-grid-preview:hide');
+    $('#stormPagesShell').stop(true, true).fadeIn(150);
     $('body').addClass('stormPagesOpen');
     $('body').addClass('stormPagesPrimaryApp');
 }
 
 function closePages() {
-    $('#stormPagesShell').fadeOut(150);
+    $('#stormPagesShell').stop(true, true).fadeOut(150);
     $('body').removeClass('stormPagesOpen');
     $('body').removeClass('stormPagesPrimaryApp');
 }
@@ -146,7 +154,14 @@ $('#stormPagesToggle').on('click', openPages);
 $('#stormPagesClose, .stormPagesBackdrop').on('click', closePages);
 
 $(document).on('click', '[data-storm-page-key]', function () {
-    activeKey = $(this).attr('data-storm-page-key');
+    const nextKey = $(this).attr('data-storm-page-key');
+    if (nextKey === 'radar') {
+        moreOpen = false;
+        renderNav();
+        triggerAction('native-radar');
+        return;
+    }
+    activeKey = nextKey;
     moreOpen = false;
     renderPages();
 });

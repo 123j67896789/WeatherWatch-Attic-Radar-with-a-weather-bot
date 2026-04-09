@@ -95,6 +95,28 @@ async function serveStatic(req, res) {
   }
 }
 
+async function frontsHandler(req, res) {
+  const HIRES_URL = 'https://tgftp.nws.noaa.gov/data/raw/as/asus02.kwbc.cod.sus.txt';
+  const LOWRES_URL = 'https://tgftp.nws.noaa.gov/data/raw/as/asus01.kwbc.cod.sus.txt';
+  const url = (req.url || '').includes('res=lo') ? LOWRES_URL : HIRES_URL;
+  try {
+    const response = await fetch(url, {
+      headers: { 'User-Agent': 'atticradar/surface-fronts' },
+      cache: 'no-store',
+    });
+    if (!response.ok) {
+      throw new Error(`Fronts upstream error ${response.status}`);
+    }
+    const text = await response.text();
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-store');
+    res.end(text);
+  } catch (error) {
+    sendJson(res, 502, { error: error?.message || 'Failed to load fronts data.' });
+  }
+}
+
 async function reportsHandler(req, res) {
   try {
     const response = await fetch('https://mesonet.agron.iastate.edu/geojson/lsr.php?sts=24&fmt=geojson', {
@@ -159,6 +181,11 @@ async function buildApiRouter() {
   ]);
 
   return async function routeApi(req, res) {
+    if ((req.url || '').startsWith('/api/fronts')) {
+      await frontsHandler(req, res);
+      return true;
+    }
+
     if ((req.url || '').startsWith('/api/reports')) {
       await reportsHandler(req, res);
       return true;

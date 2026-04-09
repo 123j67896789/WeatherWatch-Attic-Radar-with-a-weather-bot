@@ -23,18 +23,28 @@
           } catch (_) {}
         }
 
-        function patchRadarTab() {
-          var buttons = Array.prototype.slice.call(document.querySelectorAll('button.tabBtn, button.tabMoreItem, button'));
-          buttons.forEach(function (btn) {
-            var text = (btn.textContent || '').trim().toLowerCase();
-            var title = (btn.getAttribute('title') || '').trim().toLowerCase();
-            if (text !== 'radar' && title !== 'radar') return;
-            if (btn.dataset.atticRadarPatched === '1') return;
+        function isRadarTarget(node) {
+          if (!node || node.nodeType !== 1) return false;
+          var text = (node.textContent || '').trim().toLowerCase();
+          var title = (node.getAttribute('title') || '').trim().toLowerCase();
+          var href = (node.getAttribute('href') || '').trim().toLowerCase();
+          var aria = (node.getAttribute('aria-label') || '').trim().toLowerCase();
+          var dataTab = (node.getAttribute('data-tab') || '').trim().toLowerCase();
+          return text === 'radar' || title === 'radar' || aria === 'radar' || dataTab === 'radar' || href.indexOf('tab=radar') >= 0;
+        }
 
-            btn.dataset.atticRadarPatched = '1';
-            btn.textContent = 'Radar Workspace';
-            btn.setAttribute('title', 'Open Attic Radar Workspace');
-            btn.addEventListener('click', function (event) {
+        function patchRadarTab() {
+          var targets = Array.prototype.slice.call(document.querySelectorAll('button, a, [role=\"button\"], [data-tab]'));
+          targets.forEach(function (target) {
+            if (!isRadarTarget(target)) return;
+            if (target.dataset.atticRadarPatched === '1') return;
+
+            target.dataset.atticRadarPatched = '1';
+            if ((target.textContent || '').trim().toLowerCase() === 'radar') {
+              target.textContent = 'Radar Workspace';
+            }
+            target.setAttribute('title', 'Open Attic Radar Workspace');
+            target.addEventListener('click', function (event) {
               event.preventDefault();
               event.stopPropagation();
               event.stopImmediatePropagation();
@@ -42,6 +52,15 @@
             }, true);
           });
         }
+
+        document.addEventListener('click', function (event) {
+          var target = event.target && event.target.closest ? event.target.closest('button, a, [role=\"button\"], [data-tab]') : null;
+          if (!isRadarTarget(target)) return;
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+          requestAtticRadar();
+        }, true);
 
         var observer = new MutationObserver(function () {
           patchRadarTab();

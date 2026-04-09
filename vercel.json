@@ -1,0 +1,13 @@
+{
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/assets/(.*)",
+      "destination": "/storm-grid-app/assets/$1"
+    },
+    {
+      "source": "/vite.svg",
+      "destination": "/storm-grid-app/vite.svg"
+    }
+  ]
+}

@@ -100,13 +100,13 @@ function refreshPreview() {
 
 function showPreview() {
     refreshPreview();
-    $('#stormGridPreview').fadeIn(150);
+    $('#stormGridPreview').stop(true, true).fadeIn(150);
     $('body').addClass('stormGridPreviewOpen');
     $('body').addClass('stormGridWorkspacePrimary');
 }
 
 function hidePreview() {
-    $('#stormGridPreview').fadeOut(150);
+    $('#stormGridPreview').stop(true, true).fadeOut(150);
     $('body').removeClass('stormGridPreviewOpen');
     $('body').removeClass('stormGridWorkspacePrimary');
 }
@@ -122,6 +122,23 @@ $('#stormGridPreviewToggle').on('click', function () {
 
 $('#stormGridPreviewClose, .stormGridPreviewBackdrop').on('click', function () {
     hidePreview();
+});
+
+$(document).on('storm-grid-preview:show', function () {
+    showPreview();
+});
+
+$(document).on('storm-grid-preview:hide', function () {
+    hidePreview();
+});
+
+$(document).on('storm-grid-preview:toggle', function () {
+    if ($('#stormGridPreview').is(':visible')) {
+        hidePreview();
+        return;
+    }
+
+    showPreview();
 });
 
 $('.stormGridPreviewTab').on('click', function () {
@@ -199,4 +216,6 @@ setTimeout(showPreview, 120);
 
 module.exports = {
     refreshPreview,
+    showPreview,
+    hidePreview,
 };
