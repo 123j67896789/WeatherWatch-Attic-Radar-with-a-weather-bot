@@ -7,7 +7,12 @@ const set_layer_order = require('../../core/map/setLayerOrder');
 const AtticPopup = require('../../core/popup/AtticPopup');
 const display_attic_dialog = require('../../core/menu/attic_dialog');
 
-const all_watches_url = `https://www.spc.noaa.gov/products/watch/ActiveWW.kmz`; // https://www.spc.noaa.gov/products/watch/ActiveWW.kmz
+const all_watches_url = `https://www.spc.noaa.gov/products/watch/ActiveWW.kmz`;
+
+// Route SPC requests through the local server proxy to avoid CORS issues
+function spcProxy(url) {
+    return `/api/spc-proxy?url=${encodeURIComponent(url)}`;
+}
 
 function click_listener(e) {
     // if (e.originalEvent.cancelBubble) { return; }
@@ -40,7 +45,7 @@ function click_listener(e) {
 }
 
 function _fetch_individual_watch(url, callback) {
-    fetch(/*ut.phpProxy + */url, { cache: 'no-store' })
+    fetch(spcProxy(url), { cache: 'no-store' })
     .then(response => response.blob())
     .then(blob => {
         blob.lastModifiedDate = new Date();
@@ -120,7 +125,7 @@ function _plot_watches(feature_collection) {
 
 const features = [];
 function fetch_watches() {
-    fetch(/*ut.phpProxy + */all_watches_url, { cache: 'no-store' })
+    fetch(spcProxy(all_watches_url), { cache: 'no-store' })
     .then(response => response.blob())
     .then(blob => {
         blob.lastModifiedDate = new Date();
@@ -145,7 +150,7 @@ function fetch_watches() {
                     geojson.features[0].properties.id = id;
                     // features.push(geojson.features[0]);
 
-                    fetch(/*ut.phpProxy + */`https://www.spc.noaa.gov/products/watch/ww${id.padStart(4, '0')}.html`)
+                    fetch(spcProxy(`https://www.spc.noaa.gov/products/watch/ww${id.padStart(4, '0')}.html`))
                     .then(response => response.text())
                     .then(text => {
                         const doc = new DOMParser().parseFromString(text, 'text/html');

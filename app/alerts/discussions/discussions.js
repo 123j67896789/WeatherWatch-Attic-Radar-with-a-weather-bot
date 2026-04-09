@@ -7,8 +7,12 @@ const set_layer_order = require('../../core/map/setLayerOrder');
 const AtticPopup = require('../../core/popup/AtticPopup');
 const display_attic_dialog = require('../../core/menu/attic_dialog');
 
-const all_discussions_url = `https://www.spc.noaa.gov/products/md/ActiveMD.kmz`; // https://www.spc.noaa.gov/products/md/ActiveMD.kmz
-// const all_discussions_url = `http://localhost:3333/ActiveMD.kmz`
+const all_discussions_url = `https://www.spc.noaa.gov/products/md/ActiveMD.kmz`;
+
+// Route SPC requests through the local server proxy to avoid CORS issues
+function spcProxy(url) {
+    return `/api/spc-proxy?url=${encodeURIComponent(url)}`;
+}
 
 function click_listener(e) {
     if (e.originalEvent.cancelBubble) { return; }
@@ -37,7 +41,7 @@ function click_listener(e) {
 }
 
 function _fetch_individual_discussion(url, callback) {
-    fetch(/*ut.phpProxy + */url, { cache: 'no-store' })
+    fetch(spcProxy(url), { cache: 'no-store' })
     .then(response => response.blob())
     .then(blob => {
         blob.lastModifiedDate = new Date();
@@ -117,7 +121,7 @@ function _plot_discussions(feature_collection) {
 
 const features = [];
 function fetch_discussions() {
-    fetch(/*ut.phpProxy + */all_discussions_url, { cache: 'no-store' })
+    fetch(spcProxy(all_discussions_url), { cache: 'no-store' })
     .then(response => response.blob())
     .then(blob => {
         blob.lastModifiedDate = new Date();
@@ -141,7 +145,7 @@ function fetch_discussions() {
                     geojson.features[0].properties.color = 'rgb(0, 0, 245)';
                     geojson.features[0].properties.id = id;
 
-                    fetch(/*ut.phpProxy + */`https://www.spc.noaa.gov/products/md/md${id}.html`)
+                    fetch(spcProxy(`https://www.spc.noaa.gov/products/md/md${id}.html`))
                     .then(response => response.text())
                     .then(text => {
                         const doc = new DOMParser().parseFromString(text, 'text/html');

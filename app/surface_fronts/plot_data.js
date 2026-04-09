@@ -40,7 +40,7 @@ const add_midpoints = array =>
 function _return_fronts_linestrings(key, SurfaceFronts) {
     const properties = {
         width: 4,
-        dasharray: [],
+        frontType: key,
     };
     if (key == 'warm') {
         properties.color = red;
@@ -51,7 +51,6 @@ function _return_fronts_linestrings(key, SurfaceFronts) {
     } else if (key == 'trough') {
         properties.color = orange;
         properties.width = 2.5;
-        properties.dasharray = [2, 3];
     }
 
     const lines = [];
@@ -80,13 +79,20 @@ function _return_fronts_linestrings(key, SurfaceFronts) {
 }
 
 function _add_fronts_layer(feature_collection) {
+    // Mapbox GL JS v2 does not support data-driven expressions for line-dasharray,
+    // so trough (dashed) and all other fronts (solid) must be separate layers
+    // sharing one named GeoJSON source.
+    map.addSource('fronts_source', {
+        type: 'geojson',
+        data: feature_collection,
+    });
+
+    // Solid fronts: warm, cold, occluded, stationary
     map.addLayer({
-        'id': `fronts_layer`,
+        'id': 'fronts_layer',
         'type': 'line',
-        'source': {
-            type: 'geojson',
-            data: feature_collection
-        },
+        'source': 'fronts_source',
+        'filter': ['!=', ['get', 'frontType'], 'trough'],
         'layout': {
             'line-join': 'round',
             'line-cap': 'round'
@@ -94,7 +100,23 @@ function _add_fronts_layer(feature_collection) {
         'paint': {
             'line-color': ['get', 'color'],
             'line-width': ['get', 'width'],
-            'line-dasharray': ['get', 'dasharray'],
+        }
+    });
+
+    // Dashed fronts: trough only
+    map.addLayer({
+        'id': 'fronts_layer_dashed',
+        'type': 'line',
+        'source': 'fronts_source',
+        'filter': ['==', ['get', 'frontType'], 'trough'],
+        'layout': {
+            'line-join': 'round',
+            'line-cap': 'round'
+        },
+        'paint': {
+            'line-color': ['get', 'color'],
+            'line-width': ['get', 'width'],
+            'line-dasharray': [2, 3],
         }
     });
 }

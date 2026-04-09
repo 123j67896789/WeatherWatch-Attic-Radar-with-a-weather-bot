@@ -7,6 +7,7 @@ const icon_elem = '#surfaceFrontsMenuItemIcon';
 
 const surface_fronts_layers = [
     'fronts_layer',
+    'fronts_layer_dashed',
     'pressure_points_layer',
     'front_symbols_layer',
 ];
@@ -16,7 +17,9 @@ armFunctions.toggleswitchFunctions($('#armrSurfaceFrontsBtnSwitchElem'), functio
     if (map.getLayer(surface_fronts_layers[0])) {
         for (var i = 0; i < surface_fronts_layers.length; i++) {
             // surface fronts layers already exist, simply toggle visibility here
-            map.setLayoutProperty(surface_fronts_layers[i], 'visibility', 'visible');
+            if (map.getLayer(surface_fronts_layers[i])) {
+                map.setLayoutProperty(surface_fronts_layers[i], 'visibility', 'visible');
+            }
         }
     } else {
         // surface fronts layers do not exist, load them into the map style
@@ -25,6 +28,8 @@ armFunctions.toggleswitchFunctions($('#armrSurfaceFrontsBtnSwitchElem'), functio
 }, function() {
     for (var i = 0; i < surface_fronts_layers.length; i++) {
         // hide the surface fronts layers
-        map.setLayoutProperty(surface_fronts_layers[i], 'visibility', 'none');
+        if (map.getLayer(surface_fronts_layers[i])) {
+            map.setLayoutProperty(surface_fronts_layers[i], 'visibility', 'none');
+        }
     }
 })

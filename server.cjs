@@ -117,6 +117,45 @@ async function frontsHandler(req, res) {
   }
 }
 
+// Proxy for SPC (Storm Prediction Center) resources — KMZ files and HTML pages.
+// Only allows requests to spc.noaa.gov to prevent open-proxy abuse.
+async function spcProxyHandler(req, res) {
+  const urlObj = new URL(req.url, `http://${req.headers.host}`);
+  const target = urlObj.searchParams.get('url');
+  if (!target) {
+    sendJson(res, 400, { error: 'Missing url parameter.' });
+    return;
+  }
+  let targetUrl;
+  try {
+    targetUrl = new URL(target);
+  } catch {
+    sendJson(res, 400, { error: 'Invalid url parameter.' });
+    return;
+  }
+  if (targetUrl.hostname !== 'www.spc.noaa.gov') {
+    sendJson(res, 403, { error: 'Only spc.noaa.gov URLs are allowed.' });
+    return;
+  }
+  try {
+    const response = await fetch(targetUrl.href, {
+      headers: { 'User-Agent': 'atticradar/spc-proxy' },
+      cache: 'no-store',
+    });
+    if (!response.ok) {
+      throw new Error(`SPC upstream error ${response.status}`);
+    }
+    const buffer = await response.arrayBuffer();
+    const contentType = response.headers.get('content-type') || 'application/octet-stream';
+    res.statusCode = 200;
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Cache-Control', 'no-store');
+    res.end(Buffer.from(buffer));
+  } catch (error) {
+    sendJson(res, 502, { error: error?.message || 'Failed to proxy SPC request.' });
+  }
+}
+
 async function reportsHandler(req, res) {
   try {
     const response = await fetch('https://mesonet.agron.iastate.edu/geojson/lsr.php?sts=24&fmt=geojson', {
@@ -181,8 +220,13 @@ async function buildApiRouter() {
   ]);
 
   return async function routeApi(req, res) {
-    if ((req.url || '').startsWith('/api/fronts')) {
+    if ((req.url || '').split('?')[0] === '/api/fronts') {
       await frontsHandler(req, res);
+      return true;
+    }
+
+    if ((req.url || '').startsWith('/api/spc-proxy')) {
+      await spcProxyHandler(req, res);
       return true;
     }
 

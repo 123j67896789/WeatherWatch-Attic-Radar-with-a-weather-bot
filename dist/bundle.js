@@ -1168,8 +1168,12 @@ const set_layer_order = require('../../core/map/setLayerOrder');
 const AtticPopup = require('../../core/popup/AtticPopup');
 const display_attic_dialog = require('../../core/menu/attic_dialog');
 
-const all_discussions_url = `https://www.spc.noaa.gov/products/md/ActiveMD.kmz`; // https://www.spc.noaa.gov/products/md/ActiveMD.kmz
-// const all_discussions_url = `http://localhost:3333/ActiveMD.kmz`
+const all_discussions_url = `https://www.spc.noaa.gov/products/md/ActiveMD.kmz`;
+
+// Route SPC requests through the local server proxy to avoid CORS issues
+function spcProxy(url) {
+    return `/api/spc-proxy?url=${encodeURIComponent(url)}`;
+}
 
 function click_listener(e) {
     if (e.originalEvent.cancelBubble) { return; }
@@ -1198,7 +1202,7 @@ function click_listener(e) {
 }
 
 function _fetch_individual_discussion(url, callback) {
-    fetch(/*ut.phpProxy + */url, { cache: 'no-store' })
+    fetch(spcProxy(url), { cache: 'no-store' })
     .then(response => response.blob())
     .then(blob => {
         blob.lastModifiedDate = new Date();
@@ -1278,7 +1282,7 @@ function _plot_discussions(feature_collection) {
 
 const features = [];
 function fetch_discussions() {
-    fetch(/*ut.phpProxy + */all_discussions_url, { cache: 'no-store' })
+    fetch(spcProxy(all_discussions_url), { cache: 'no-store' })
     .then(response => response.blob())
     .then(blob => {
         blob.lastModifiedDate = new Date();
@@ -1302,7 +1306,7 @@ function fetch_discussions() {
                     geojson.features[0].properties.color = 'rgb(0, 0, 245)';
                     geojson.features[0].properties.id = id;
 
-                    fetch(/*ut.phpProxy + */`https://www.spc.noaa.gov/products/md/md${id}.html`)
+                    fetch(spcProxy(`https://www.spc.noaa.gov/products/md/md${id}.html`))
                     .then(response => response.text())
                     .then(text => {
                         const doc = new DOMParser().parseFromString(text, 'text/html');
@@ -1330,21 +1334,15 @@ const combine_dictionary_data = require('./combine_dictionary_data');
 const fetch_watches = require('./watches/watches');
 const fetch_discussions = require('./discussions/discussions');
 
-const url_prefix = 'https://atticradar.steepatticstairs.net/';
-
-const new_alerts_url = `https://preview.weather.gov/edd/resource/edd/hazards/getShortFusedHazards.php?all=true`;
-const sws_alerts_url = `https://preview.weather.gov/edd/resource/edd/hazards/getSps.php`;
-// https://realearth.ssec.wisc.edu/products/?app=_ALL_
-const all_alerts_url = `https://realearth.ssec.wisc.edu/api/shapes?products=NWS-Alerts-All`;
 const noaa_alerts_url = `https://api.weather.gov/alerts/active`;
 
-// previously, these were written as:
-// "../app/alerts/zones/forecast_zones.js.gz"
-// but that didn't work when pushed to github pages
+// Use root-relative paths so zone files are served from the local server.
+// Previously fetched from 'https://atticradar.steepatticstairs.net/' which
+// caused CORS failures when running on localhost.
 const zone_urls = [
-    `${url_prefix}app/alerts/zones/forecast_zones.js.gz`,
-    `${url_prefix}app/alerts/zones/county_zones.js.gz`,
-    `${url_prefix}app/alerts/zones/fire_zones.js.gz`,
+    '/app/alerts/zones/forecast_zones.js.gz',
+    '/app/alerts/zones/county_zones.js.gz',
+    '/app/alerts/zones/fire_zones.js.gz',
 ];
 
 var headers = new Headers();
@@ -1838,7 +1836,12 @@ const set_layer_order = require('../../core/map/setLayerOrder');
 const AtticPopup = require('../../core/popup/AtticPopup');
 const display_attic_dialog = require('../../core/menu/attic_dialog');
 
-const all_watches_url = `https://www.spc.noaa.gov/products/watch/ActiveWW.kmz`; // https://www.spc.noaa.gov/products/watch/ActiveWW.kmz
+const all_watches_url = `https://www.spc.noaa.gov/products/watch/ActiveWW.kmz`;
+
+// Route SPC requests through the local server proxy to avoid CORS issues
+function spcProxy(url) {
+    return `/api/spc-proxy?url=${encodeURIComponent(url)}`;
+}
 
 function click_listener(e) {
     // if (e.originalEvent.cancelBubble) { return; }
@@ -1871,7 +1874,7 @@ function click_listener(e) {
 }
 
 function _fetch_individual_watch(url, callback) {
-    fetch(/*ut.phpProxy + */url, { cache: 'no-store' })
+    fetch(spcProxy(url), { cache: 'no-store' })
     .then(response => response.blob())
     .then(blob => {
         blob.lastModifiedDate = new Date();
@@ -1951,7 +1954,7 @@ function _plot_watches(feature_collection) {
 
 const features = [];
 function fetch_watches() {
-    fetch(/*ut.phpProxy + */all_watches_url, { cache: 'no-store' })
+    fetch(spcProxy(all_watches_url), { cache: 'no-store' })
     .then(response => response.blob())
     .then(blob => {
         blob.lastModifiedDate = new Date();
@@ -1976,7 +1979,7 @@ function fetch_watches() {
                     geojson.features[0].properties.id = id;
                     // features.push(geojson.features[0]);
 
-                    fetch(/*ut.phpProxy + */`https://www.spc.noaa.gov/products/watch/ww${id.padStart(4, '0')}.html`)
+                    fetch(spcProxy(`https://www.spc.noaa.gov/products/watch/ww${id.padStart(4, '0')}.html`))
                     .then(response => response.text())
                     .then(text => {
                         const doc = new DOMParser().parseFromString(text, 'text/html');
@@ -33543,18 +33546,17 @@ module.exports = SurfaceFronts;
 },{}],106:[function(require,module,exports){
 const SurfaceFronts = require('./SurfaceFronts');
 const plot_data = require('./plot_data');
-const ut = require('../core/utils');
 
 function _remove_empty_strings_from_array(array) {
     return array.filter(line => { return line.trim() != '' });
 }
 
 function fetch_data() {
-    const hires_file_url = `https://tgftp.nws.noaa.gov/data/raw/as/asus02.kwbc.cod.sus.txt`;
-    const lowres_file_url = `https://tgftp.nws.noaa.gov/data/raw/as/asus01.kwbc.cod.sus.txt`;
-
-    fetch(ut.phpProxy + hires_file_url)
-    .then(response => response.text())
+    fetch('/api/fronts')
+    .then(response => {
+        if (!response.ok) throw new Error(`Fronts request failed: ${response.status}`);
+        return response.text();
+    })
     .then(data => {
         var formatted_lines = _remove_empty_strings_from_array(data.replaceAll('\r', '').split('\n'));
         formatted_lines = formatted_lines.join('\n');
@@ -33563,10 +33565,13 @@ function fetch_data() {
         console.log(fronts);
         plot_data(fronts);
     })
+    .catch(err => {
+        console.error('Failed to load surface fronts:', err);
+    });
 }
 
 module.exports = fetch_data;
-},{"../core/utils":36,"./SurfaceFronts":105,"./plot_data":108}],107:[function(require,module,exports){
+},{"./SurfaceFronts":105,"./plot_data":108}],107:[function(require,module,exports){
 const fetch_data = require('./fetch_data');
 const armFunctions = require('../core/menu/atticRadarMenu');
 const map = require('../core/map/map');
