@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.aerisapi.com/sdk/js/mapsgl/latest/aerisweather.mapsgl.css" rel="stylesheet" />
+    <script defer src="https://cdn.aerisapi.com/sdk/js/mapsgl/latest/aerisweather.mapsgl.js"></script>
+    <title>WeatherWatch</title>
+    <script type="module" crossorigin src="./assets/index-C1hQBIyv.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Cjo7-GEX.css">
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="root"></div>
+    <script>
+      (function () {
+        function requestAtticRadar() {
+          try {
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ type: 'storm-grid-open-radar' }, window.location.origin);
+            }
+          } catch (_) {}
+        }
+
+        function patchRadarTab() {
+          var buttons = Array.prototype.slice.call(document.querySelectorAll('button.tabBtn, button.tabMoreItem, button'));
+          buttons.forEach(function (btn) {
+            var text = (btn.textContent || '').trim().toLowerCase();
+            var title = (btn.getAttribute('title') || '').trim().toLowerCase();
+            if (text !== 'radar' && title !== 'radar') return;
+            if (btn.dataset.atticRadarPatched === '1') return;
+
+            btn.dataset.atticRadarPatched = '1';
+            btn.textContent = 'Radar Workspace';
+            btn.setAttribute('title', 'Open Attic Radar Workspace');
+            btn.addEventListener('click', function (event) {
+              event.preventDefault();
+              event.stopPropagation();
+              event.stopImmediatePropagation();
+              requestAtticRadar();
+            }, true);
+          });
+        }
+
+        var observer = new MutationObserver(function () {
+          patchRadarTab();
+        });
+
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+        window.addEventListener('DOMContentLoaded', patchRadarTab);
+        patchRadarTab();
+      })();
+    </script>
+  </body>
+</html>

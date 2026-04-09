@@ -1652,3 +1652,1948 @@ td.day.active, span.month.active, span.year.active {
     background-color: rgba(0, 0, 0, 0.25);
     /* pointer-events: none; */
 }
+
+#stormGridPreviewToggle {
+    border: 1px solid rgba(153, 205, 255, 0.35);
+    background: linear-gradient(135deg, rgba(10, 18, 34, 0.9), rgba(27, 63, 102, 0.92));
+    color: rgb(229, 241, 255);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+#stormPagesToggle {
+    border: 1px solid rgba(153, 205, 255, 0.24);
+    background: rgba(7, 12, 22, 0.82);
+    color: rgb(223, 236, 250);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+#stormPagesToggle:hover,
+#stormGridPreviewToggle:hover {
+    filter: brightness(1.08);
+}
+
+#stormGridPreviewToggle {
+    border-color: rgba(153, 205, 255, 0.42);
+    background: linear-gradient(135deg, rgba(22, 46, 77, 0.96), rgba(42, 103, 182, 0.96));
+}
+
+.stormPagesShell {
+    position: absolute;
+    inset: 0;
+    z-index: 2000000002;
+}
+
+.stormPagesBackdrop {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #1f2737 0%, #445165 100%);
+}
+
+.stormPagesPanel {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    color: rgb(233, 240, 250);
+    display: flex;
+    flex-direction: column;
+}
+
+.stormPagesTopbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px 8px;
+    background: linear-gradient(180deg, rgba(20, 29, 53, 0.96), rgba(25, 30, 47, 0.94));
+    border-bottom: none;
+}
+
+.stormPagesBrandTitle {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+    color: #7dd7ff;
+}
+
+.stormPagesBrandSub {
+    margin-top: 4px;
+    color: rgba(236, 241, 252, 0.7);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.stormPagesHeaderActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.stormPagesHeaderBtn {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgb(235, 239, 248);
+    border-radius: 999px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.stormPagesHeaderBtnIcon {
+    width: 36px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.stormPagesTabbar {
+    padding: 10px 16px 12px;
+    background: linear-gradient(180deg, rgba(25, 30, 47, 0.94), rgba(24, 30, 45, 0.96));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stormPagesNav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.stormPagesNavBtn {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgb(220, 232, 246);
+    border-radius: 16px;
+    padding: 9px 16px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.stormPagesNavBtn.is-active {
+    background: linear-gradient(135deg, #5dd7ff, #8f79ff);
+    border-color: transparent;
+    color: white;
+}
+
+.stormPagesMoreWrap {
+    position: relative;
+}
+
+.stormPagesMoreMenu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    background: rgba(16, 21, 34, 0.98);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    z-index: 12;
+}
+
+.stormPagesMoreItem {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgb(220, 232, 246);
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.stormPagesMoreItem.is-active,
+.stormPagesMoreItem:hover {
+    background: rgba(93, 215, 255, 0.14);
+    border-color: rgba(93, 215, 255, 0.3);
+    color: white;
+}
+
+.stormPagesContent {
+    overflow: auto;
+    padding: 0;
+    background: linear-gradient(180deg, #0b1120 0%, #0b1120 38%, #4a5568 100%);
+}
+
+.stormPagesPanel.stormPagesGridMode .stormPagesTopbar,
+.stormPagesPanel.stormPagesGridMode .stormPagesTabbar {
+    display: none;
+}
+
+.stormPagesPanel.stormPagesGridMode .stormPagesContent {
+    background: transparent;
+}
+
+.stormPagesActionBtn,
+.stormPagesLinkCard {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 10px 14px;
+    background: rgba(21, 28, 43, 0.92);
+    color: rgb(226, 235, 246);
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.stormPagesCompactBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(11, 17, 32, 0.96);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stormPagesCompactTitle {
+    color: white;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.stormPagesCompactActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.stormPagesStage {
+    min-height: calc(100vh - 118px);
+}
+
+.stormPagesEmbedFrame {
+    width: 100%;
+    min-height: calc(100vh - 118px);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.stormPagesPanel.stormPagesGridMode .stormPagesStage,
+.stormPagesPanel.stormPagesGridMode .stormPagesEmbedFrame {
+    min-height: 100vh;
+}
+
+.stormPagesNativeRadarStage {
+    padding: 16px;
+}
+
+.stormPagesNativeRadarCard {
+    border-radius: 22px;
+    background: rgba(21, 28, 43, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    color: white;
+}
+
+.stormPagesNativeRadarTitle {
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.stormPagesNativeRadarText {
+    margin-top: 10px;
+    color: rgba(236, 241, 252, 0.72);
+    line-height: 1.5;
+}
+
+#stormGridPreviewToggle:hover {
+    filter: brightness(1.08);
+}
+
+.stormGridCommandDock,
+.stormGridSummaryRail {
+    position: absolute;
+    z-index: 520;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stormGridCommandDock {
+    top: 86px;
+    left: 18px;
+    width: 220px;
+    padding: 14px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(8, 14, 26, 0.9), rgba(12, 21, 38, 0.82));
+    border: 1px solid rgba(130, 181, 235, 0.12);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+body.stormGridWorkspacePrimary #mapFooter {
+    opacity: 0.58;
+    transition: opacity 0.2s ease;
+}
+
+body.stormGridWorkspacePrimary #stationMenuItemDiv,
+body.stormGridWorkspacePrimary #alertMenuItemDiv,
+body.stormGridWorkspacePrimary #drawMenuItemDiv,
+body.stormGridWorkspacePrimary #settingsItemDiv {
+    display: none;
+}
+
+body.stormGridWorkspacePrimary #metarStationMenuItemDiv,
+body.stormGridWorkspacePrimary #colorPickerItemDiv {
+    opacity: 0.55;
+}
+
+body.stormGridWorkspacePrimary #radarHeader {
+    background: linear-gradient(90deg, rgba(38, 77, 123, 0.28), rgba(0, 0, 0, 0));
+}
+
+body.stormGridWorkspacePrimary #stormGridPreviewToggle {
+    box-shadow: 0 0 0 1px rgba(170, 214, 255, 0.22), 0 12px 30px rgba(15, 58, 112, 0.34);
+}
+
+.stormGridDockHeader {
+    display: grid;
+    gap: 4px;
+}
+
+.stormGridDockEyebrow,
+.stormGridSummaryLabel {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(121, 176, 234);
+}
+
+.stormGridDockTitle {
+    font-size: 20px;
+    font-weight: 800;
+    color: rgb(235, 244, 255);
+}
+
+.stormGridDockActions {
+    display: grid;
+    gap: 8px;
+}
+
+.stormGridDockBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px solid rgba(152, 191, 232, 0.1);
+    border-radius: 16px;
+    padding: 11px 13px;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgb(221, 233, 247);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.stormGridDockBtn:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.stormGridDockBtn.is-active {
+    background: linear-gradient(135deg, rgba(49, 124, 220, 0.82), rgba(33, 88, 166, 0.82));
+    border-color: rgba(146, 198, 255, 0.32);
+    color: white;
+}
+
+.stormGridDockBtn-secondary {
+    margin-top: 4px;
+}
+
+.stormGridDockFooter {
+    padding-top: 2px;
+}
+
+.stormGridDockNote {
+    color: rgb(164, 182, 205);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.stormGridSummaryRail {
+    top: 86px;
+    right: 18px;
+    width: 240px;
+}
+
+.stormGridRadarSidebar {
+    position: absolute;
+    top: 250px;
+    right: 18px;
+    bottom: 18px;
+    width: 240px;
+    z-index: 520;
+}
+
+.stormGridRadarSidebarInner {
+    display: grid;
+    gap: 12px;
+    max-height: 100%;
+    overflow: auto;
+    padding-right: 2px;
+}
+
+.stormGridSidebarCard {
+    padding: 16px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(8, 14, 26, 0.88), rgba(12, 21, 38, 0.8));
+    border: 1px solid rgba(130, 181, 235, 0.12);
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.stormGridSidebarHero {
+    background:
+        radial-gradient(circle at top left, rgba(74, 163, 255, 0.22), rgba(74, 163, 255, 0) 44%),
+        linear-gradient(180deg, rgba(8, 14, 26, 0.94), rgba(12, 21, 38, 0.84));
+}
+
+.stormGridSidebarEyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(121, 176, 234);
+}
+
+.stormGridSidebarTitle,
+.stormGridSidebarSectionTitle {
+    color: rgb(240, 246, 255);
+    font-weight: 800;
+}
+
+.stormGridSidebarTitle {
+    margin-top: 6px;
+    font-size: 22px;
+}
+
+.stormGridSidebarSectionTitle {
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.stormGridSidebarMeta {
+    margin-top: 10px;
+    color: rgb(179, 197, 219);
+    line-height: 1.45;
+    font-size: 13px;
+}
+
+.stormGridToolbarRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.stormGridToolbarBtn,
+.stormGridSegmentBtn {
+    border: 1px solid rgba(152, 191, 232, 0.12);
+    border-radius: 14px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgb(220, 232, 246);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.stormGridToolbarBtn.is-active,
+.stormGridSegmentBtn.is-active {
+    background: linear-gradient(135deg, rgba(49, 124, 220, 0.9), rgba(33, 88, 166, 0.9));
+    border-color: rgba(146, 198, 255, 0.34);
+    color: white;
+}
+
+.stormGridSegmented {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.stormGridCheckRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgb(223, 233, 245);
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.stormGridCheckRow:first-of-type {
+    margin-top: 0;
+}
+
+.stormGridCheckRow input {
+    accent-color: rgb(62, 127, 212);
+}
+
+.stormGridSummaryCard {
+    padding: 14px 16px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(8, 14, 26, 0.84), rgba(12, 21, 38, 0.74));
+    border: 1px solid rgba(130, 181, 235, 0.12);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.stormGridSummaryValue {
+    margin-top: 8px;
+    color: rgb(239, 245, 255);
+    font-size: 19px;
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+.stormGridSummaryValueSmall {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.stormGridPreviewShell {
+    position: absolute;
+    inset: 0;
+    z-index: 2000000001;
+    overflow: hidden;
+}
+
+.stormGridPreviewBackdrop {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top left, rgba(74, 163, 255, 0.18), transparent 35%),
+        linear-gradient(135deg, rgba(3, 7, 18, 0.5), rgba(3, 7, 18, 0.78));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.stormGridPreviewPanel {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    bottom: 18px;
+    width: min(430px, calc(100vw - 36px));
+    display: flex;
+    flex-direction: column;
+    background:
+        linear-gradient(180deg, rgba(10, 18, 34, 0.96), rgba(8, 12, 24, 0.96));
+    color: rgb(231, 239, 250);
+    border: 1px solid rgba(130, 181, 235, 0.16);
+    border-radius: 28px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+}
+
+.stormGridPreviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 22px 22px 14px;
+    background: linear-gradient(180deg, rgba(84, 146, 220, 0.16), rgba(84, 146, 220, 0));
+}
+
+.stormGridPreviewEyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(131, 191, 255);
+}
+
+.stormGridPreviewTitle {
+    margin-top: 6px;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.stormGridPreviewCloseBtn {
+    border: 0;
+    background: rgba(255, 255, 255, 0.08);
+    color: inherit;
+    border-radius: 999px;
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+.stormGridPreviewTabBar {
+    display: flex;
+    gap: 8px;
+    padding: 0 22px 18px;
+}
+
+.stormGridPreviewTab {
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgb(181, 196, 215);
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.stormGridPreviewTab.is-active {
+    background: linear-gradient(135deg, rgb(62, 127, 212), rgb(26, 90, 171));
+    color: white;
+}
+
+.stormGridPreviewBody {
+    flex: 1;
+    overflow: auto;
+    padding: 0 22px 22px;
+}
+
+.stormGridPreviewSection {
+    display: none;
+}
+
+.stormGridPreviewSection.is-active {
+    display: block;
+}
+
+.stormGridHeroCard,
+.stormGridInfoCard,
+.stormGridChecklistCard {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(125, 170, 220, 0.14);
+    border-radius: 24px;
+    padding: 18px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.stormGridHeroCard {
+    background:
+        radial-gradient(circle at top left, rgba(82, 161, 255, 0.24), rgba(82, 161, 255, 0) 42%),
+        rgba(255, 255, 255, 0.06);
+}
+
+.stormGridHeroLabel,
+.stormGridInfoLabel {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(147, 182, 220);
+}
+
+.stormGridHeroValue,
+.stormGridInfoValue {
+    margin-top: 10px;
+    font-size: 24px;
+    line-height: 1.12;
+    font-weight: 800;
+}
+
+.stormGridHeroSub,
+.stormGridInfoSub,
+.stormGridNarrative {
+    margin-top: 10px;
+    color: rgb(181, 196, 215);
+    line-height: 1.5;
+}
+
+.stormGridCardGrid,
+.stormGridStack {
+    display: grid;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.stormGridChecklistCard {
+    margin-top: 14px;
+}
+
+.stormGridChecklistTitle {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.stormGridChecklistList {
+    margin-top: 14px;
+    display: grid;
+    gap: 12px;
+}
+
+.stormGridChecklistRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.stormGridStatusPill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    border-radius: 999px;
+    padding: 7px 10px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgb(203, 214, 228);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.stormGridStatusPill-active {
+    background: rgba(52, 211, 153, 0.18);
+    color: rgb(143, 248, 213);
+}
+
+.stormGridChipRow {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.stormGridChip {
+    display: inline-flex;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: rgba(82, 161, 255, 0.12);
+    color: rgb(187, 217, 255);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+body.stormGridPreviewOpen #stormGridPreviewToggle {
+    background: linear-gradient(135deg, rgb(62, 127, 212), rgb(26, 90, 171));
+}
+
+body.stormGridPreviewOpen #stormPagesToggle {
+    opacity: 0.88;
+}
+
+body.stormPagesPrimaryApp #mapFooter,
+body.stormPagesPrimaryApp #stormGridCommandDock,
+body.stormPagesPrimaryApp #stormGridSummaryRail,
+body.stormPagesPrimaryApp #stormGridRadarSidebar {
+    display: none;
+}
+
+body.stormPagesPrimaryApp #radarHeader {
+    background: linear-gradient(90deg, rgba(23, 44, 74, 0.88), rgba(12, 21, 38, 0.82));
+}
+
+body.stormPagesPrimaryApp #stormPagesToggle {
+    background: linear-gradient(135deg, rgb(62, 127, 212), rgb(26, 90, 171));
+    border-color: rgba(146, 198, 255, 0.34);
+}
+
+body.stormPagesPrimaryApp #stormGridPreviewToggle {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(153, 205, 255, 0.18);
+    box-shadow: none;
+}
+
+@media only screen and (max-width: 700px) {
+    .stormGridCommandDock,
+    .stormGridSummaryRail {
+        position: fixed;
+    }
+
+    .stormPagesTopbar,
+    .stormPagesTabbar,
+    .stormPagesCompactBar {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .stormPagesTopbar,
+    .stormPagesCompactBar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .stormPagesHeaderActions {
+        justify-content: flex-start;
+    }
+
+    .stormPagesContent {
+        padding: 0;
+    }
+
+    .stormGridCommandDock {
+        top: auto;
+        bottom: 14px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+    }
+
+    .stormGridSummaryRail {
+        top: 72px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+    }
+
+    .stormGridRadarSidebar {
+        position: fixed;
+        top: auto;
+        left: 10px;
+        right: 10px;
+        bottom: 190px;
+        width: auto;
+    }
+
+    .stormGridPreviewPanel {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        bottom: 10px;
+        width: auto;
+        border-radius: 22px;
+    }
+
+    .stormGridPreviewTitle {
+        font-size: 20px;
+    }
+}
+
+/* ==========================================================================
+   Watch Wall (native YouTube grid, ported from Storm Chaser Grid)
+   ========================================================================== */
+
+/* Controls bar */
+.wwBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: rgba(11, 17, 32, 0.97);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
+}
+
+.wwBarLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.wwBarTitle {
+    font-size: 15px;
+    font-weight: 900;
+    color: #7dd7ff;
+}
+
+.wwBarSub {
+    font-size: 11px;
+    color: rgba(200, 215, 235, 0.65);
+}
+
+.wwBarRight {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Shared control widgets */
+.wwSearchInput {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgb(225, 235, 248);
+    font-size: 12px;
+    padding: 5px 10px;
+    outline: none;
+}
+
+.wwSearchInput:focus {
+    border-color: rgba(125, 215, 255, 0.45);
+}
+
+.wwToggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: rgba(210, 225, 245, 0.85);
+    cursor: pointer;
+    user-select: none;
+}
+
+.wwSelect {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgb(225, 235, 248);
+    font-size: 12px;
+    padding: 5px 8px;
+    cursor: pointer;
+}
+
+.wwBtn {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    color: rgb(225, 235, 248);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.wwBtn:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.wwBtnSecondary {
+    opacity: 0.7;
+}
+
+/* Grid wrapper */
+.wwGridWrap {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 14px;
+}
+
+.wwGridWrap.wwScroll {
+    overflow: auto;
+    align-items: flex-start;
+}
+
+.wwGrid {
+    display: grid;
+    grid-template-columns: repeat(var(--ww-cols, 3), 1fr);
+    gap: 10px;
+}
+
+/* Tile */
+.wwTile {
+    background: rgba(5, 6, 18, 0.75);
+    border-radius: 14px;
+    overflow: hidden;
+    width: clamp(220px, var(--ww-tile-w, 32vw), var(--ww-tile-max, 420px));
+    aspect-ratio: 16 / 9;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    cursor: default;
+}
+
+.wwTile.wwDragging {
+    opacity: 0.55;
+}
+
+.wwTile.wwDragOver {
+    outline: 2px dashed rgba(125, 215, 255, 0.75);
+    outline-offset: 2px;
+}
+
+.wwTileHeader {
+    padding: 6px 10px;
+    background: linear-gradient(180deg, rgba(12, 14, 33, 0.94), rgba(6, 8, 18, 0.88));
+    flex-shrink: 0;
+}
+
+.wwGridWrap.wwCompact .wwTileHeader {
+    padding: 3px 8px;
+}
+
+.wwTileHeaderRow,
+.wwTileHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.wwTileName {
+    font-size: 12px;
+    font-weight: 800;
+    color: rgba(200, 225, 248, 0.92);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wwTileActions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.wwMiniLink,
+.wwMiniBtn {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.88);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.wwMiniLink:hover,
+.wwMiniBtn:hover {
+    background: rgba(255, 255, 255, 0.11);
+}
+
+.wwMiniBtnOn {
+    background: rgba(125, 215, 255, 0.15);
+    border: 1px solid rgba(125, 215, 255, 0.35);
+    color: #7dd7ff;
+}
+
+.wwDragHandle {
+    opacity: 0.7;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.85);
+    cursor: grab;
+    user-select: none;
+    font-size: 13px;
+}
+
+.wwDragHandle:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Tile frame */
+.wwTileFrameWrap {
+    position: relative;
+    flex: 1;
+    background: #000;
+    min-height: 0;
+}
+
+.wwTileFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+.wwOfflineOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(200, 210, 225, 0.7);
+    pointer-events: none;
+}
+
+/* Tile footer */
+.wwTileFooter {
+    padding: 4px 10px;
+    background: rgba(6, 8, 18, 0.88);
+    min-height: 22px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.wwGridWrap.wwCompact .wwTileFooter {
+    display: none;
+}
+
+.wwLivePill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 900;
+    color: #4ade80;
+    letter-spacing: 0.05em;
+}
+
+.wwLiveDot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: wwPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes wwPulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.35; }
+}
+
+/* Empty state */
+.wwEmpty {
+    padding: 60px 24px;
+    text-align: center;
+    color: rgba(200, 215, 240, 0.65);
+}
+
+.wwEmptyTitle {
+    font-size: 18px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.wwEmptySub {
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: 340px;
+    margin: 0 auto;
+}
+
+/* Fullscreen view */
+.wwFullscreen {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.wwFullBar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: rgba(11, 17, 32, 0.97);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.wwFullTitle {
+    font-size: 14px;
+    font-weight: 800;
+    color: #7dd7ff;
+    margin-left: 8px;
+}
+
+.wwFullFrameWrap {
+    flex: 1;
+    background: #000;
+    min-height: 0;
+}
+
+.wwFullFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* Manage / Live panel */
+.wwManage {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.wwManageTopbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(11, 17, 32, 0.97);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
+}
+
+.wwManageHeading {
+    font-size: 15px;
+    color: #7dd7ff;
+}
+
+.wwManageList,
+.wwLivePanelList {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 16px;
+}
+
+.wwManageRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 13px;
+    color: rgba(210, 225, 245, 0.9);
+}
+
+.wwManageName {
+    font-weight: 700;
+    min-width: 160px;
+}
+
+.wwManageCid {
+    font-size: 11px;
+    color: rgba(180, 200, 225, 0.55);
+    font-family: monospace;
+    flex: 1;
+}
+
+.wwManageAddRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(11, 17, 32, 0.97);
+    flex-shrink: 0;
+}
+
+.wwManageAddRow .wwSearchInput {
+    flex: 1;
+    min-width: 140px;
+}
+
+.wwLivePanelRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 13px;
+    color: rgba(210, 225, 245, 0.9);
+    cursor: pointer;
+}
+
+.wwLivePanelName {
+    font-weight: 700;
+    flex: 1;
+}
+
+.wwLivePanelStatus {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(180, 200, 225, 0.5);
+}
+
+/* Make stormPagesContent flex so grid fills height */
+.stormPagesContent {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   Page content — shared styles for all native tab implementations
+   ========================================================================== */
+
+.pgWrap {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    color: rgb(218, 230, 248);
+}
+
+/* Scrollable body */
+.pgScrollBody {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Controls bar — reuses wwBar pattern */
+.pgBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: rgba(11, 17, 32, 0.97);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.pgBarLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pgBarRight {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.pgBarTitle {
+    font-size: 15px;
+    font-weight: 900;
+    color: #7dd7ff;
+}
+
+.pgBarSub {
+    font-size: 11px;
+    color: rgba(200,215,235,0.65);
+}
+
+/* Sections */
+.pgSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pgSectionTitle {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(180,200,230,0.65);
+}
+
+/* Cards */
+.pgCard {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.pgCardTitle {
+    font-size: 13px;
+    font-weight: 800;
+    color: #7dd7ff;
+    margin-bottom: 8px;
+}
+
+.pgCardBody {
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(210,225,245,0.85);
+}
+
+.pgBadge {
+    display: inline-block;
+    background: rgba(125,215,255,0.15);
+    color: #7dd7ff;
+    border-radius: 999px;
+    padding: 1px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+/* Toggle button */
+.pgToggleBtn {
+    padding: 5px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: rgba(220,232,248,0.9);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.pgToggleBtnActive {
+    background: rgba(125,215,255,0.18);
+    border-color: rgba(125,215,255,0.45);
+    color: #7dd7ff;
+}
+
+/* Day/mode selector buttons */
+.pgDayBtn,
+.pgModeBtn {
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    color: rgba(215,228,246,0.8);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.pgDayBtnActive,
+.pgModeBtnActive {
+    background: rgba(125,215,255,0.2);
+    border-color: rgba(125,215,255,0.5);
+    color: #7dd7ff;
+}
+
+/* External links */
+.pgExtLink {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    color: rgba(200,225,248,0.9);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.pgExtLink:hover {
+    background: rgba(255,255,255,0.09);
+    color: #7dd7ff;
+}
+
+.pgLinkRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pgWebsiteList {
+    display: grid;
+    gap: 10px;
+}
+
+.pgWebsiteItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    background: rgba(16, 22, 36, 0.92);
+    color: rgb(225, 235, 247);
+    text-decoration: none;
+}
+
+.pgWebsiteItem:hover {
+    border-color: rgba(93, 215, 255, 0.28);
+    background: rgba(20, 29, 46, 0.98);
+}
+
+.pgWebsiteName {
+    font-weight: 700;
+}
+
+.pgWebsiteRating {
+    color: #7dd9ff;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Analysis images */
+.pgImageSection {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+}
+
+.pgAnalysisImg {
+    max-width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.pgImageCaption {
+    font-size: 11px;
+    color: rgba(180,200,230,0.55);
+}
+
+/* Loading / error / empty */
+.pgLoading {
+    padding: 40px 20px;
+    text-align: center;
+    color: rgba(180,200,230,0.6);
+    font-size: 13px;
+}
+
+.pgError {
+    padding: 20px;
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 10px;
+    color: #fca5a5;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.pgEmpty {
+    padding: 60px 24px;
+    text-align: center;
+    color: rgba(200,215,240,0.6);
+}
+
+.pgEmptyTitle {
+    font-size: 18px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.pgEmptySub {
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: 340px;
+    margin: 0 auto;
+}
+
+/* Alerts */
+.pgAlertGroup {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+}
+
+.pgAlertGroupHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    background: rgba(255,255,255,0.04);
+    border-left: 4px solid transparent;
+}
+
+.pgAlertGroupTitle {
+    font-size: 13px;
+    font-weight: 800;
+    flex: 1;
+}
+
+.pgAlertCount {
+    font-size: 11px;
+    font-weight: 900;
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: #000;
+}
+
+.pgAlertItem {
+    padding: 10px 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.pgAlertEvent {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.pgAlertHeadline {
+    font-size: 12px;
+    color: rgba(210,225,245,0.8);
+    line-height: 1.4;
+}
+
+.pgAlertMeta {
+    font-size: 11px;
+    color: rgba(170,190,220,0.55);
+}
+
+.pgAlertMore {
+    padding: 8px 14px;
+    font-size: 11px;
+    color: rgba(180,200,230,0.5);
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Reports */
+.pgReportSummary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.pgReportBadge {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.pgReportItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.pgReportType {
+    font-size: 10px;
+    font-weight: 900;
+    padding: 3px 7px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.pgReportBody {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.pgReportTypeFull {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.pgReportLoc {
+    font-size: 11px;
+    color: rgba(170,190,220,0.7);
+}
+
+.pgReportTime {
+    color: rgba(150,175,210,0.55);
+    font-size: 10px;
+}
+
+.pgReportRemark {
+    font-size: 11px;
+    color: rgba(170,190,220,0.6);
+    line-height: 1.35;
+}
+
+/* Risk */
+.pgRiskGauge {
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.pgRiskAbbr {
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.pgRiskLabel {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.pgRiskSub {
+    font-size: 12px;
+    color: rgba(180,200,230,0.55);
+}
+
+.pgRiskScale {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pgRiskScaleItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.pgRiskScaleAbbr {
+    font-size: 12px;
+    font-weight: 900;
+    min-width: 40px;
+}
+
+.pgRiskScaleLabel {
+    font-size: 12px;
+    color: rgba(210,225,245,0.85);
+}
+
+/* Clock & stopwatch */
+.pgClockSection {
+    align-items: center;
+    text-align: center;
+}
+
+.pgClockLabel {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(180,200,230,0.55);
+}
+
+.pgClock {
+    font-size: 42px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    color: #7dd7ff;
+    line-height: 1.1;
+}
+
+.pgClockSub {
+    font-size: 20px;
+    font-weight: 700;
+    color: rgba(180,200,230,0.7);
+    font-variant-numeric: tabular-nums;
+}
+
+.pgStopwatch {
+    font-size: 36px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    color: rgba(200,225,248,0.9);
+    margin: 6px 0;
+}
+
+.pgStopwatchBtns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Converter */
+.pgConverterRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.pgConverterResult {
+    font-size: 13px;
+    font-weight: 700;
+    color: #7dd7ff;
+}
+
+/* Calc grid */
+.pgCalcGrid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 10px;
+    align-items: center;
+}
+
+.pgCalcLabel {
+    font-size: 12px;
+    color: rgba(180,200,230,0.65);
+    white-space: nowrap;
+}
+
+.pgCalcInput {
+    width: 140px;
+}
+
+.pgCalcResult {
+    margin-top: 8px;
+    font-size: 13px;
+    color: rgba(210,225,245,0.9);
+    line-height: 1.6;
+}
+
+/* AI */
+.pgAIContext {
+    font-size: 12px;
+    font-family: monospace;
+    color: rgba(180,200,230,0.75);
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.pgAIInputRow {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.pgAIInput {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: rgb(220,232,248);
+    font-size: 13px;
+    padding: 9px 12px;
+    resize: vertical;
+    min-height: 80px;
+    outline: none;
+    font-family: inherit;
+}
+
+.pgAIInput:focus {
+    border-color: rgba(125,215,255,0.4);
+}
+
+.pgAIResponse {
+    margin-top: 10px;
+}
+
+.pgAIAnswer {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(210,225,245,0.9);
+    white-space: pre-wrap;
+}
+
+/* Changelog */
+.pgChangelogEntry {
+    border-left: 3px solid rgba(125,215,255,0.3);
+    padding-left: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pgChangelogHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pgChangelogDate {
+    font-size: 12px;
+    color: rgba(170,190,220,0.55);
+}
+
+.pgChangelogTag {
+    font-size: 10px;
+    font-weight: 900;
+    background: rgba(125,215,255,0.15);
+    color: #7dd7ff;
+    border-radius: 999px;
+    padding: 2px 8px;
+    text-transform: uppercase;
+}
+
+.pgChangelogTitle {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.pgChangelogList {
+    margin: 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.pgChangelogList li {
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(200,220,245,0.8);
+}
+
+/* Help */
+.pgHelpSection {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.pgHelpTitle {
+    font-size: 14px;
+    font-weight: 800;
+    color: #7dd7ff;
+}
+
+.pgHelpBody {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(200,220,245,0.85);
+}
+
+.pgHelpBody code {
+    background: rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+/* About hero */
+.pgAboutHero {
+    text-align: center;
+    padding: 20px 0 8px;
+}
+
+.pgAboutTitle {
+    font-size: 36px;
+    font-weight: 900;
+    color: #7dd7ff;
+    line-height: 1;
+}
+
+.pgAboutSub {
+    font-size: 14px;
+    color: rgba(180,200,230,0.7);
+    margin-top: 6px;
+}
+
+/* Hazcams embed */
+.pgFullIframe {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.pgEmbedFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}

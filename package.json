@@ -2,9 +2,9 @@
   "name": "AtticRadar",
   "main": "main.js",
   "scripts": {
-    "build": "browserify -t brfs app/core/entry/entry.js -p [ glslify-require ] -o dist/bundle.js; uglifyjs dist/bundle.js -m -o dist/bundle.js; ./tools/size.sh",
-    "serve": "watchify -t brfs app/core/entry/entry.js -p [ glslify-require ] -o dist/bundle.js -v",
-    "start": "npx http-server -c-1 -p 3333"
+    "build": "node node_modules/browserify/bin/cmd.js -t brfs app/core/entry/entry.js -p glslify-require -o dist/bundle.js",
+    "serve": "node node_modules/watchify/bin/cmd.js -t brfs app/core/entry/entry.js -p glslify-require -o dist/bundle.js -v",
+    "start": "node server.cjs"
   },
   "dependencies": {
     "@turf/turf": "^6.5.0",

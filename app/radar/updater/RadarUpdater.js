@@ -44,10 +44,10 @@ class RadarUpdater {
 
     enable() {
         this._check_for_new_file();
-        // check for a new radar scan every 15 seconds
-        this.interval = setInterval(() => {
-            this._check_for_new_file();
-        }, 15000);
+        // auto-refresh disabled
+        // this.interval = setInterval(() => {
+        //     this._check_for_new_file();
+        // }, 15000);
     }
 
     disable() {

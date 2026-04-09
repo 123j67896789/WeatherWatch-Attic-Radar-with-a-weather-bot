@@ -205,13 +205,233 @@
         <!-- <div id="top-left" style="color: #a0a0a0; font-size: 15px; line-height: 17px; text-align: left !important;">
             <span><b style="font-weight: 900">AtticRadar</b><br>steepatticstairs.net</span>
         </div> -->
-        <div id="top-right" style="font-weight: bold"></div>
+        <div id="top-right" style="font-weight: bold">
+            <button id="stormPagesToggle" type="button">Pages</button>
+            <button id="stormGridPreviewToggle" type="button">Radar Workspace</button>
+        </div>
         <span id="radarInfoSpan" style="display: none">
             <!-- <div style="font-size: 15px"><b>VCP: </b><a id='radarVCP'>None</a></div>
             <div style="font-size: 12px"><sus id='radarStationParent'><i class="fa-solid fa-circle-info" id="radarStationIcon" style="display: none">&nbsp;&nbsp;</i><b id='radarStation'>No Station Selected</b></sus><a id="radarTime"></a></div> -->
             <div style="font-size: 15px"><b class="icon-blue" id="radarStation" style="cursor: pointer">KLWX</b> <span id="radarLocation"></span></div>
             <div style="font-size: 13px; color: rgb(161, 161, 161)"><span id="radarVCP"></span></div>
         </span>
+    </div>
+
+    <aside id="stormGridCommandDock" class="stormGridCommandDock">
+        <div class="stormGridDockHeader">
+            <div class="stormGridDockEyebrow">Permanent Radar</div>
+            <div class="stormGridDockTitle">Radar Workspace</div>
+        </div>
+        <div class="stormGridDockActions">
+            <button class="stormGridDockBtn" type="button" data-storm-grid-action="alerts">Alerts</button>
+            <button class="stormGridDockBtn" type="button" data-storm-grid-action="fronts">Fronts</button>
+            <button class="stormGridDockBtn" type="button" data-storm-grid-action="radio">Radio</button>
+            <button class="stormGridDockBtn" type="button" data-storm-grid-action="tides">Tides</button>
+            <button class="stormGridDockBtn" type="button" data-storm-grid-action="stations">Stations</button>
+            <button class="stormGridDockBtn" type="button" data-storm-grid-action="draw">Draw</button>
+            <button class="stormGridDockBtn stormGridDockBtn-secondary" type="button" data-storm-grid-action="settings">Settings</button>
+        </div>
+        <div class="stormGridDockFooter">
+            <div class="stormGridDockNote">This is now the main radar control surface. The older AtticRadar controls remain underneath while we finish the migration.</div>
+        </div>
+    </aside>
+
+    <aside id="stormGridSummaryRail" class="stormGridSummaryRail">
+        <div class="stormGridSummaryCard">
+            <div class="stormGridSummaryLabel">Station</div>
+            <div id="stormGridDockStation" class="stormGridSummaryValue">Waiting for radar</div>
+        </div>
+        <div class="stormGridSummaryCard">
+            <div class="stormGridSummaryLabel">Product</div>
+            <div id="stormGridDockProduct" class="stormGridSummaryValue stormGridSummaryValueSmall">No product selected</div>
+        </div>
+        <div class="stormGridSummaryCard">
+            <div class="stormGridSummaryLabel">Center</div>
+            <div id="stormGridDockCenter" class="stormGridSummaryValue stormGridSummaryValueSmall">Unknown</div>
+        </div>
+    </aside>
+
+    <aside id="stormGridRadarSidebar" class="stormGridRadarSidebar">
+        <div class="stormGridRadarSidebarInner">
+            <div class="stormGridSidebarCard stormGridSidebarHero">
+                <div class="stormGridSidebarEyebrow">Imported From Storm Chaser Grid</div>
+                <div class="stormGridSidebarTitle">Radar Workspace</div>
+                <div id="stormGridSidebarSummary" class="stormGridSidebarMeta">AtticRadar radar context will appear here.</div>
+            </div>
+
+            <div class="stormGridSidebarCard">
+                <div class="stormGridSidebarSectionTitle">Radar Actions</div>
+                <div class="stormGridToolbarRow">
+                    <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="alerts">Warnings</button>
+                    <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="stations">Stations</button>
+                    <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="draw">Draw</button>
+                    <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="settings">Menu</button>
+                </div>
+            </div>
+
+            <div class="stormGridSidebarCard">
+                <div class="stormGridSidebarSectionTitle">Map Style</div>
+                <div class="stormGridSegmented">
+                    <button class="stormGridSegmentBtn" type="button" data-storm-grid-map-style="dark">Dark</button>
+                    <button class="stormGridSegmentBtn" type="button" data-storm-grid-map-style="light">Light</button>
+                    <button class="stormGridSegmentBtn" type="button" data-storm-grid-map-style="satellite">Satellite</button>
+                </div>
+            </div>
+
+            <div class="stormGridSidebarCard">
+                <div class="stormGridSidebarSectionTitle">Layers</div>
+                <label class="stormGridCheckRow">
+                    <input id="stormGridLayerRadar" type="checkbox">
+                    <span>Show radar sweep</span>
+                </label>
+                <label class="stormGridCheckRow">
+                    <input id="stormGridLayerStormTracks" type="checkbox">
+                    <span>Show storm tracks</span>
+                </label>
+                <label class="stormGridCheckRow">
+                    <input id="stormGridLayerFronts" type="checkbox">
+                    <span>Show surface fronts</span>
+                </label>
+                <label class="stormGridCheckRow">
+                    <input id="stormGridLayerRadio" type="checkbox">
+                    <span>Show weather radio</span>
+                </label>
+                <label class="stormGridCheckRow">
+                    <input id="stormGridLayerTides" type="checkbox">
+                    <span>Show tide stations</span>
+                </label>
+                <label class="stormGridCheckRow">
+                    <input id="stormGridLayerWarnings" type="checkbox">
+                    <span>Show warning polygons</span>
+                </label>
+            </div>
+        </div>
+    </aside>
+
+    <div id="stormPagesShell" class="stormPagesShell" style="display: none">
+        <div class="stormPagesBackdrop"></div>
+        <div class="stormPagesPanel">
+            <div class="stormPagesTopbar">
+                <div class="stormPagesBrand">
+                    <div class="stormPagesBrandTitle">WeatherWatch</div>
+                    <div id="stormPagesNow" class="stormPagesBrandSub">Now: Radar</div>
+                </div>
+                <div class="stormPagesHeaderActions">
+                    <button class="stormPagesHeaderBtn" type="button">Device: PC</button>
+                    <button class="stormPagesHeaderBtn" type="button">SFX</button>
+                    <button class="stormPagesHeaderBtn" type="button">Draw</button>
+                    <button class="stormPagesHeaderBtn" type="button">Live Panel</button>
+                    <button class="stormPagesHeaderBtn" type="button">Manage Chasers</button>
+                    <button class="stormPagesHeaderBtn stormPagesHeaderBtnIcon" type="button">-</button>
+                    <button class="stormPagesHeaderBtn stormPagesHeaderBtnIcon" type="button">+</button>
+                    <button class="stormPagesHeaderBtn" id="stormPagesClose" type="button">Reset</button>
+                </div>
+            </div>
+            <div class="stormPagesTabbar">
+                <nav id="stormPagesNav" class="stormPagesNav" aria-label="Storm pages"></nav>
+            </div>
+            <main id="stormPagesContent" class="stormPagesContent"></main>
+        </div>
+    </div>
+
+    <div id="stormGridPreview" class="stormGridPreviewShell" style="display: none">
+        <div class="stormGridPreviewBackdrop"></div>
+        <aside class="stormGridPreviewPanel">
+            <div class="stormGridPreviewHeader">
+                <div>
+                    <div class="stormGridPreviewEyebrow">Storm Chaser Grid Direction</div>
+                    <div class="stormGridPreviewTitle">AtticRadar Modern Shell Preview</div>
+                </div>
+                <button id="stormGridPreviewClose" class="stormGridPreviewCloseBtn" type="button" aria-label="Close preview">Close</button>
+            </div>
+
+            <div class="stormGridPreviewTabBar" role="tablist" aria-label="Preview tabs">
+                <button class="stormGridPreviewTab is-active" type="button" data-storm-grid-tab="overview">Overview</button>
+                <button class="stormGridPreviewTab" type="button" data-storm-grid-tab="radar">Radar</button>
+                <button class="stormGridPreviewTab" type="button" data-storm-grid-tab="field">Field</button>
+            </div>
+
+            <div class="stormGridPreviewBody">
+                <section class="stormGridPreviewSection is-active" data-storm-grid-panel="overview">
+                    <div class="stormGridHeroCard">
+                        <div class="stormGridHeroLabel">Current workspace</div>
+                        <div id="stormGridPreviewStation" class="stormGridHeroValue">Waiting for radar</div>
+                        <div id="stormGridPreviewProduct" class="stormGridHeroSub">AtticRadar map state will appear here.</div>
+                    </div>
+
+                    <div class="stormGridCardGrid">
+                        <article class="stormGridInfoCard">
+                            <div class="stormGridInfoLabel">Map Center</div>
+                            <div id="stormGridPreviewCenter" class="stormGridInfoValue">Unknown</div>
+                            <div class="stormGridInfoSub">Live from the current AtticRadar map.</div>
+                        </article>
+                        <article class="stormGridInfoCard">
+                            <div class="stormGridInfoLabel">Map Style</div>
+                            <div id="stormGridPreviewMapStyle" class="stormGridInfoValue">Dark</div>
+                            <div class="stormGridInfoSub">Reads the existing AtticRadar style mode.</div>
+                        </article>
+                    </div>
+
+                    <article class="stormGridChecklistCard">
+                        <div class="stormGridChecklistTitle">Live layers</div>
+                        <div class="stormGridChecklistList">
+                            <div class="stormGridChecklistRow">
+                                <span>Alerts</span>
+                                <span id="stormGridPreviewAlerts" class="stormGridStatusPill">Checking</span>
+                            </div>
+                            <div class="stormGridChecklistRow">
+                                <span>Surface Fronts</span>
+                                <span id="stormGridPreviewFronts" class="stormGridStatusPill">Checking</span>
+                            </div>
+                            <div class="stormGridChecklistRow">
+                                <span>NOAA Weather Radio</span>
+                                <span id="stormGridPreviewRadio" class="stormGridStatusPill">Checking</span>
+                            </div>
+                            <div class="stormGridChecklistRow">
+                                <span>Tide Stations</span>
+                                <span id="stormGridPreviewTides" class="stormGridStatusPill">Checking</span>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="stormGridPreviewSection" data-storm-grid-panel="radar">
+                    <div class="stormGridStack">
+                        <article class="stormGridInfoCard">
+                            <div class="stormGridInfoLabel">Radar focus</div>
+                            <div id="stormGridPreviewRadarFocus" class="stormGridInfoValue">No station selected</div>
+                            <div class="stormGridInfoSub">This would become the top-level radar summary card from the newer app.</div>
+                        </article>
+                        <article class="stormGridInfoCard">
+                            <div class="stormGridInfoLabel">Why this direction works</div>
+                            <div class="stormGridNarrative">
+                                We keep AtticRadar's proven map and radar engine, then layer in the clearer organization, status summaries, and multi-tool shell style from Storm Chaser Grid.
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="stormGridPreviewSection" data-storm-grid-panel="field">
+                    <div class="stormGridStack">
+                        <article class="stormGridInfoCard">
+                            <div class="stormGridInfoLabel">Field workflow idea</div>
+                            <div class="stormGridNarrative">
+                                This panel could grow into quick field cards for hazards, favorite stations, chaser feeds, and mobile-first controls without replacing the current AtticRadar internals all at once.
+                            </div>
+                        </article>
+                        <article class="stormGridInfoCard">
+                            <div class="stormGridInfoLabel">Next integration targets</div>
+                            <div class="stormGridChipRow">
+                                <span class="stormGridChip">Radar toolbar</span>
+                                <span class="stormGridChip">Status sidebar</span>
+                                <span class="stormGridChip">Layer toggles</span>
+                                <span class="stormGridChip">Watch wall</span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </aside>
     </div>
 
     <!--
