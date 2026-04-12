@@ -152,7 +152,57 @@ function _hurricane_color(status) {
     return string;
 }
 
+function split_station_label(stationId) {
+    const value = String(stationId || '').trim().toUpperCase();
+    if (value.length <= 2) return [value, ''];
+    const pivot = Math.ceil(value.length / 2);
+    return [value.slice(0, pivot), value.slice(pivot)];
+}
+
+function create_station_mark_icon(options) {
+    const ring = options.ring;
+    const wave = options.wave;
+    const glow = options.glow;
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140">
+        <defs>
+            <filter id="wwGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feColorMatrix in="blur" type="matrix"
+                    values="1 0 0 0 0
+                            0 1 0 0 0
+                            0 0 1 0 0
+                            0 0 0 0.5 0" />
+            </filter>
+        </defs>
+        <!-- Glow under tower base -->
+        <ellipse cx="70" cy="108" rx="40" ry="24" fill="${glow}" filter="url(#wwGlow)" />
+        <!-- A-frame tower legs -->
+        <polygon points="70,80 47,134 59,134" fill="${ring}" />
+        <polygon points="70,80 93,134 81,134" fill="${ring}" />
+        <!-- Cross brace -->
+        <rect x="54" y="106" width="32" height="5" rx="2.5" fill="${ring}" opacity="0.85" />
+        <!-- Second cross brace -->
+        <rect x="58" y="92" width="24" height="4" rx="2" fill="${ring}" opacity="0.65" />
+        <!-- Platform at tower top -->
+        <rect x="58" y="76" width="24" height="8" rx="3" fill="${ring}" />
+        <!-- Vertical mast -->
+        <rect x="67" y="42" width="6" height="36" rx="3" fill="${wave}" />
+        <!-- Radar dish arc -->
+        <path d="M46 52 Q70 22 94 52"
+            fill="none" stroke="${ring}" stroke-width="9" stroke-linecap="round" />
+        <!-- Signal arc 1 -->
+        <path d="M33 38 Q70 4 107 38"
+            fill="none" stroke="${wave}" stroke-width="5.5" stroke-linecap="round" opacity="0.8" />
+        <!-- Signal arc 2 (outermost) -->
+        <path d="M20 24 Q70 -14 120 24"
+            fill="none" stroke="${wave}" stroke-width="3.5" stroke-linecap="round" opacity="0.4" />
+    </svg>`;
+}
+
 module.exports = {
     icons,
-    add_icon_svg
+    add_icon_svg,
+    split_station_label,
+    create_station_mark_icon,
 };

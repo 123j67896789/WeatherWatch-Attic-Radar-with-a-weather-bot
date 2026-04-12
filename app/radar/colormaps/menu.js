@@ -25,7 +25,7 @@ const lookup = {
     'DVL': ['DVL']
 }
 const ctables = [
-    'REF1', 'REF2', 'REF3', 'REF4', 'REF5',
+    'REF1', 'REF2', 'REF3', 'REF4', 'REF5', 'REF6',
     'VEL1', 'VEL2',
     'RHO1',
     'ZDR1',

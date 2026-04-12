@@ -18,6 +18,22 @@ function _copy(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
 
+function _point_in_bounds(lat, lon, bounds, paddingDegrees) {
+    return (
+        lat <= bounds.north + paddingDegrees &&
+        lat >= bounds.south - paddingDegrees &&
+        lon <= bounds.east + paddingDegrees &&
+        lon >= bounds.west - paddingDegrees
+    );
+}
+
+function _get_station_padding_for_zoom(zoom) {
+    if (zoom < 4) return 8;
+    if (zoom < 6) return 5;
+    if (zoom < 8) return 3;
+    return 1.5;
+}
+
 function do_when_map_load(func) {
     setTimeout(function() {
         if (map.loaded()) {
@@ -38,15 +54,31 @@ function do_when_map_load(func) {
  */
 function _generate_stations_geojson(status_info = null) {
     var points = [];
+    const zoom = map.getZoom();
+    const bounds = map.getBounds();
+    const paddedBounds = {
+        north: bounds.getNorth(),
+        south: bounds.getSouth(),
+        east: bounds.getEast(),
+        west: bounds.getWest(),
+    };
+    const paddingDegrees = _get_station_padding_for_zoom(zoom);
+
     for (var station in nexrad_locations) {
         if (station != 'KLIX') {
             if (nexrad_locations[station].NONSTANDARD == undefined || nexrad_locations[station].NONSTANDARD == false) {
                 if (nexrad_locations[station].type == 'WSR-88D' || nexrad_locations[station].type == 'TDWR') {
                     const lat = nexrad_locations[station].lat;
                     const lon = nexrad_locations[station].lon;
+                    if (!_point_in_bounds(lat, lon, paddedBounds, paddingDegrees)) {
+                        continue;
+                    }
 
                     const station_properties = _copy(nexrad_locations[station]);
                     station_properties.station_id = station;
+                    const splitLabel = icons.split_station_label(station);
+                    station_properties.label_top = splitLabel[0];
+                    station_properties.label_bottom = splitLabel[1];
                     if (status_info != null) {
                         station_properties.status = status_info[station]?.status;
                     }
@@ -74,10 +106,26 @@ function _generate_stations_geojson(status_info = null) {
  */
 function _add_stations_layer(radar_stations_geojson, callback) {
     icons.add_icon_svg([
-        [icons.icons.grey_station_marker, 'grey_station'],
-        [icons.icons.blue_station_marker, 'blue_station'],
-        [icons.icons.red_station_marker, 'red_station'],
-        [icons.icons.orange_station_marker, 'orange_station'],
+        [icons.create_station_mark_icon({
+            ring: '#1e6b1e',
+            wave: '#4dff4d',
+            glow: 'rgba(77, 255, 77, 0.15)',
+        }), 'station_mark_normal'],
+        [icons.create_station_mark_icon({
+            ring: '#2a9e2a',
+            wave: '#90ff90',
+            glow: 'rgba(144, 255, 144, 0.30)',
+        }), 'station_mark_selected'],
+        [icons.create_station_mark_icon({
+            ring: '#ff6d74',
+            wave: '#ff9aa0',
+            glow: 'rgba(255, 109, 116, 0.28)',
+        }), 'station_mark_down'],
+        [icons.create_station_mark_icon({
+            ring: '#d68a2a',
+            wave: '#ffcf7f',
+            glow: 'rgba(214, 138, 42, 0.28)',
+        }), 'station_mark_tdwr'],
     ], () => {
         map.addSource('stationSymbolLayer', {
             'type': 'geojson',
@@ -85,37 +133,61 @@ function _add_stations_layer(radar_stations_geojson, callback) {
             'data': radar_stations_geojson
         });
 
-        // Add a symbol layer
         map.addLayer({
             'id': 'stationSymbolLayer',
             'type': 'symbol',
             'source': 'stationSymbolLayer',
+            'minzoom': 3,
             'layout': {
                 'symbol-sort-key': ['get', 'order'],
                 'icon-image': [
                     'case',
                     ['==', ['get', 'clicked'], 'yes'],
-                    'blue_station',
+                    'station_mark_selected',
                     ['==', ['get', 'status'], 'down'],
-                    'red_station',
+                    'station_mark_down',
                     ['==', ['get', 'type'], 'TDWR'],
-                    'orange_station',
-                    // ['==', ['feature-state', 'color'], 1],
-                    // 'dark_grey_station_marker', // mouse-over
-                    // ['==', ['feature-state', 'color'], 2],
-                    // 'grey_station_marker',
-                    'grey_station'
+                    'station_mark_tdwr',
+                    'station_mark_normal'
                 ],
+                'icon-size': [
+                    'case',
+                    ['==', ['get', 'type'], 'TDWR'],
+                    ['interpolate', ['linear'], ['zoom'], 3, 0, 5.5, 0.2, 8, 0.28, 12, 0.34],
+                    ['interpolate', ['linear'], ['zoom'], 3, 0.18, 5, 0.24, 8, 0.32, 12, 0.38]
+                ],
+                'icon-anchor': 'center',
+                'icon-allow-overlap': false,
+                'text-field': '',
+            },
+        });
 
-                'icon-size': 0.23,
+        map.addLayer({
+            'id': 'stationLabelLayer',
+            'type': 'symbol',
+            'source': 'stationSymbolLayer',
+            'layout': {
+                'symbol-sort-key': ['get', 'order'],
                 'text-field': ['get', 'station_id'],
-                'text-size': 13,
-                'text-font': [
-                    'Arial Unicode MS Bold'
+                'text-size': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    3, 10,
+                    5, 10,
+                    7, 12,
+                    10, 14
                 ],
+                'text-font': ['Arial Unicode MS Bold'],
+                'text-anchor': 'left',
+                'text-offset': [1.8, 0],
+                'text-allow-overlap': false,
             },
             'paint': {
-                'text-color': 'black'
+                'text-color': '#ffffff',
+                'text-halo-color': '#b71c1c',
+                'text-halo-width': 3.5,
+                'text-halo-blur': 0.2,
             }
         });
 
@@ -125,8 +197,32 @@ function _add_stations_layer(radar_stations_geojson, callback) {
             map.getSource('stationSymbolLayer').setData(statusified_geojson);
         });
 
-        set_layer_order();
+        map.__atticStationsRefresh = function() {
+            const currentStatus = window.atticData && window.atticData.radar_station_status
+                ? window.atticData.radar_station_status
+                : null;
+            const refreshedGeojson = _generate_stations_geojson(currentStatus);
+            const stationSource = map.getSource('stationSymbolLayer');
+            if (stationSource) {
+                stationSource.setData(refreshedGeojson);
+            }
+        };
 
+        if (!map.__atticStationsViewportBound) {
+            map.on('moveend', function() {
+                if (typeof map.__atticStationsRefresh === 'function') {
+                    map.__atticStationsRefresh();
+                }
+            });
+            map.on('zoomend', function() {
+                if (typeof map.__atticStationsRefresh === 'function') {
+                    map.__atticStationsRefresh();
+                }
+            });
+            map.__atticStationsViewportBound = true;
+        }
+
+        set_layer_order();
         callback();
     });
 }
@@ -157,6 +253,46 @@ function mouse_move(e) {
     map.getSource('stationSymbolLayer').setData(geojson);
 }
 
+function select_station_from_feature(featureProperties) {
+    const clickedStation = featureProperties.station_id;
+    window.atticData.currentStation = clickedStation;
+    $('#radarStation').html(clickedStation);
+    $('#radarLocation').html(nexrad_locations[clickedStation].name);
+    $('#radarHeaderPagesBtn').css('display', 'inline-flex');
+    const stationType = featureProperties.type;
+    window.atticData.L2_file_id = '';
+
+    var productToLoad;
+    var abbvProductToLoad;
+    if (stationType == 'WSR-88D') {
+        $('#wsr88d_psm').show();
+        $('#tdwr_psm').hide();
+        $('#level2_psm').hide();
+
+        productToLoad = 'N0B';
+        abbvProductToLoad = 'ref';
+        $('#productsDropdownTriggerText').html(window.longProductNames[abbvProductToLoad]);
+    } else if (stationType == 'TDWR') {
+        $('#wsr88d_psm').hide();
+        $('#tdwr_psm').show();
+        $('#level2_psm').hide();
+
+        productToLoad = 'TZ0';
+        abbvProductToLoad = 'sr-ref';
+        $('#productsDropdownTriggerText').html(window.longProductNames[abbvProductToLoad]);
+    }
+
+    $('#radarInfoSpan').show();
+
+    window.atticData.from_file_upload = false;
+    loaders_nexrad.quick_level_3_plot(clickedStation, productToLoad, (L3Factory) => {});
+}
+
+function handle_station_click(e) {
+    mouse_move(e);
+    select_station_from_feature(e.features[0].properties);
+}
+
 /**
  * Function that enables all mouse-related event listeners for the radar station layer
  */
@@ -164,6 +300,9 @@ function _enable_mouse_listeners() {
     map.on('mouseover', 'stationSymbolLayer', mouse_over);
     map.on('mouseout', 'stationSymbolLayer', mouse_out);
     map.on('click', 'stationSymbolLayer', mouse_move);
+    map.on('mouseover', 'stationLabelLayer', mouse_over);
+    map.on('mouseout', 'stationLabelLayer', mouse_out);
+    map.on('click', 'stationLabelLayer', mouse_move);
 }
 /**
  * Function that disables all mouse-related event listeners for the radar station layer
@@ -172,6 +311,9 @@ function _disable_mouse_listeners() {
     map.off('mouseover', 'stationSymbolLayer', mouse_over);
     map.off('mouseout', 'stationSymbolLayer', mouse_out);
     map.off('click', 'stationSymbolLayer', mouse_move);
+    map.off('mouseover', 'stationLabelLayer', mouse_over);
+    map.off('mouseout', 'stationLabelLayer', mouse_out);
+    map.off('click', 'stationLabelLayer', mouse_move);
 }
 
 /**
@@ -184,42 +326,8 @@ function _init_mouse_listeners() {
  * Initialize the click listener for the first time.
  */
 function _init_click_listener() {
-    map.on('click', 'stationSymbolLayer', (e) => {
-        const base = e.features[0].properties;
-        const clickedStation = base.station_id;
-        window.atticData.currentStation = clickedStation;
-        $('#radarStation').html(clickedStation);
-        $('#radarLocation').html(nexrad_locations[clickedStation].name);
-        const stationType = base.type;
-        window.atticData.L2_file_id = '';
-
-        var productToLoad;
-        var abbvProductToLoad;
-        if (stationType == 'WSR-88D') {
-            $('#wsr88d_psm').show();
-            $('#tdwr_psm').hide();
-            $('#level2_psm').hide();
-
-            productToLoad = 'N0B';
-            abbvProductToLoad = 'ref';
-            // $(`.productOption[value="${abbvProductToLoad}"]`).html()
-            $('#productsDropdownTriggerText').html(window.longProductNames[abbvProductToLoad]);
-        } else if (stationType == 'TDWR') {
-            $('#wsr88d_psm').hide();
-            $('#tdwr_psm').show();
-            $('#level2_psm').hide();
-
-            productToLoad = 'TZ0';
-            abbvProductToLoad = 'sr-ref';
-            // $(`.productOption[value="${abbvProductToLoad}"]`).html()
-            $('#productsDropdownTriggerText').html(window.longProductNames[abbvProductToLoad]);
-        }
-
-        $('#radarInfoSpan').show();
-
-        window.atticData.from_file_upload = false;
-        loaders_nexrad.quick_level_3_plot(clickedStation, productToLoad, (L3Factory) => {});
-    });
+    map.on('click', 'stationSymbolLayer', handle_station_click);
+    map.on('click', 'stationLabelLayer', handle_station_click);
 }
 
 

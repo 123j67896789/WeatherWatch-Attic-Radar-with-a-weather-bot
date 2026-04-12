@@ -115,6 +115,9 @@ $('.psmRow').click(function(e) {
         } else {
             loaders_nexrad.quick_level_3_plot(currentStation, resultProduct, (L3Factory) => { });
         }
+
+        $('#productSelectionMenu').hide();
+        $(document.body).off('click');
         // loaders.getLatestFile(currentStation, [3, resultProduct, 0], function(url) {
         //     console.log(url)
         //     loaders.loadFileObject(ut.phpProxy + url + '#', 3);

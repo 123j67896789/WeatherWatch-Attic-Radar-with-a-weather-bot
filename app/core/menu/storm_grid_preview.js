@@ -6,7 +6,7 @@ function formatCoordinate(value, positiveLabel, negativeLabel) {
     }
 
     const direction = value >= 0 ? positiveLabel : negativeLabel;
-    return `${Math.abs(value).toFixed(2)}° ${direction}`;
+    return `${Math.abs(value).toFixed(2)} deg ${direction}`;
 }
 
 function setStatusPill(elem, active) {
@@ -20,6 +20,14 @@ function syncCheckbox(selector, checked) {
     const elem = $(selector);
     if (!elem.length) return;
     elem.prop('checked', !!checked);
+}
+
+function queueMapResize(delay = 170) {
+    setTimeout(() => {
+        if (map && map.resize) {
+            map.resize();
+        }
+    }, delay);
 }
 
 function applyMapStyle(style) {
@@ -53,16 +61,78 @@ function readStationText() {
     return `${station || 'Station'}${location ? ` ${location}` : ''}`.trim();
 }
 
-function readProductText() {
+function readProductName() {
     const productTrigger = $('#productsDropdownTriggerText').text().trim();
+    if (!productTrigger || productTrigger === 'Products') {
+        return 'Reflectivity';
+    }
+
+    return productTrigger;
+}
+
+function readRadarTimeText() {
     const radarTime = $('#radarDateTime').text().trim();
-    const product = productTrigger || 'No product selected';
-    return radarTime ? `${product} · ${radarTime}` : product;
+    if (!radarTime || radarTime === 'Date & Time') {
+        return 'Waiting for sweep';
+    }
+
+    return radarTime;
+}
+
+function readProductText() {
+    const product = readProductName();
+    const radarTime = readRadarTimeText();
+    return radarTime === 'Waiting for sweep' ? product : `${product} · ${radarTime}`;
+}
+
+function positionWorkspaceProductMenu() {
+    const psm = $('#productSelectionMenu');
+    if (!psm.length) return;
+
+    psm.css({
+        position: 'fixed',
+        top: '108px',
+        right: '28px',
+        left: 'auto',
+        bottom: 'auto',
+        'max-height': 'calc(100vh - 160px)',
+        'z-index': 2000000004,
+    });
+}
+
+function clearWorkspaceProductMenuPosition() {
+    const psm = $('#productSelectionMenu');
+    if (!psm.length) return;
+
+    psm.css({
+        position: '',
+        top: '',
+        right: '',
+        left: '',
+        bottom: '',
+        'max-height': '',
+        'z-index': '',
+    });
+}
+
+function openWorkspaceProductMenu(event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    setTimeout(() => {
+        $('#productsDropdownTrigger').trigger('click');
+        positionWorkspaceProductMenu();
+        refreshPreview();
+    }, 0);
 }
 
 function refreshPreview() {
     const stationText = readStationText();
+    const productName = readProductName();
     const productText = readProductText();
+    const radarTimeText = readRadarTimeText();
     const centerText = readMapCenter();
     const mapStyle = (window.atticData && window.atticData.map_type) ? window.atticData.map_type : 'dark';
 
@@ -75,6 +145,9 @@ function refreshPreview() {
     $('#stormGridDockProduct').text(productText);
     $('#stormGridDockCenter').text(centerText);
     $('#stormGridSidebarSummary').text(`${stationText} · ${productText}`);
+    $('#stormGridProductText').text(productName);
+    $('#stormGridProductMeta').text('Open the radar product menu');
+    $('#stormGridProductTime').text(radarTimeText);
 
     setStatusPill($('#stormGridPreviewAlerts'), $('#alertMenuItemIcon').hasClass('menu_item_selected'));
     setStatusPill($('#stormGridPreviewFronts'), $('#armrSurfaceFrontsBtnSwitchElem').is(':checked'));
@@ -99,29 +172,35 @@ function refreshPreview() {
 }
 
 function showPreview() {
+    $('#stormPagesShell').stop(true, true).hide();
+    $('body').removeClass('stormPagesOpen');
+    $('body').removeClass('stormPagesPrimaryApp');
     refreshPreview();
     $('#stormGridPreview').stop(true, true).fadeIn(150);
     $('body').addClass('stormGridPreviewOpen');
     $('body').addClass('stormGridWorkspacePrimary');
+    queueMapResize();
 }
 
 function hidePreview() {
     $('#stormGridPreview').stop(true, true).fadeOut(150);
     $('body').removeClass('stormGridPreviewOpen');
     $('body').removeClass('stormGridWorkspacePrimary');
+    clearWorkspaceProductMenuPosition();
+    $('#productSelectionMenu').hide();
+    queueMapResize();
 }
 
 $('#stormGridPreviewToggle').on('click', function () {
-    if ($('#stormGridPreview').is(':visible')) {
-        hidePreview();
-        return;
-    }
-
     showPreview();
 });
 
 $('#stormGridPreviewClose, .stormGridPreviewBackdrop').on('click', function () {
     hidePreview();
+});
+
+$('#stormGridProductTrigger, #stormGridProductMenuBtn').on('click', function (event) {
+    openWorkspaceProductMenu(event);
 });
 
 $(document).on('storm-grid-preview:show', function () {
@@ -167,6 +246,10 @@ $('[data-storm-grid-action]').on('click', function () {
         $('#drawMenuItemIcon').trigger('click');
     } else if (action === 'settings') {
         $('#settingsItemClass').trigger('click');
+    } else if (action === 'metar') {
+        $('#metarStationMenuItemIcon').trigger('click');
+    } else if (action === 'probe') {
+        $('#colorPickerItemClass').trigger('click');
     }
 
     setTimeout(refreshPreview, 20);
@@ -212,7 +295,6 @@ if (map && map.on) {
 }
 
 setInterval(refreshPreview, 3000);
-setTimeout(showPreview, 120);
 
 module.exports = {
     refreshPreview,

@@ -324,6 +324,40 @@ color: 70 67 190 254 19 144 242
 color: 80 166 176 150 255 231 188
 color: 85 255 231 188`
 
+const reflectivity_weatherwatch = {
+    colors: [
+        'rgb(40, 228, 242)',  // 0
+        'rgb(34, 198, 238)',  // 3
+        'rgb(28, 118, 228)',  // 7
+        'rgb(24, 122, 230)',  // 12
+        'rgb(41, 219, 106)',  // 18
+        'rgb(33, 205, 86)',   // 21
+        'rgb(23, 190, 56)',   // 26
+        'rgb(10, 122, 16)',   // 30
+        'rgb(255, 241, 18)',  // 35
+        'rgb(255, 179, 20)',  // 39
+        'rgb(255, 98, 18)',   // 43
+        'rgb(255, 18, 18)',   // 47
+        'rgb(150, 8, 8)',     // 50
+        'rgb(92, 4, 4)',      // 54
+        'rgb(207, 49, 221)',  // 57
+        'rgb(244, 118, 247)', // 60
+        'rgb(38, 38, 38)',    // 67
+        'rgb(96, 96, 96)',    // 71
+        'rgb(122, 122, 122)', // 73
+        'rgb(170, 170, 170)', // 76
+        'rgb(196, 196, 196)', // 80
+        'rgb(212, 212, 212)', // 82
+        'rgb(228, 228, 228)', // 86
+        'rgb(241, 241, 241)', // 90
+        'rgb(248, 248, 248)', // 93
+        'rgb(255, 255, 255)'  // 98
+    ],
+    values: [
+        0, 3, 7, 12, 18, 21, 26, 30, 35, 39, 43, 47, 50, 54, 57, 60, 67, 71, 73, 76, 80, 82, 86, 90, 93, 98
+    ],
+}
+
 const velocity = 
 `Product:bv
 units: KTS
@@ -1622,6 +1656,7 @@ const product_colors = {
     REF3: colortable_parser(reflectivity_nws),
     REF4: colortable_parser(reflectivity_gr2analyst),
     REF5: colortable_parser(reflectivity_radaromega),
+    REF6: reflectivity_weatherwatch,
     VEL1: colortable_parser(velocity),
     VEL2: {
         colors: [

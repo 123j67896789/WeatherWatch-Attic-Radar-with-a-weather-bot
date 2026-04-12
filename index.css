@@ -7,6 +7,16 @@ html {
     /* Firefox */
 }
 
+:root {
+    --ww-brand-red: #c6292f;
+    --ww-brand-red-bright: #e1464d;
+    --ww-brand-blue: #2f67d0;
+    --ww-brand-blue-bright: #55a5ff;
+    --ww-brand-ink: #05070d;
+    --ww-brand-panel: #0b1220;
+    --ww-brand-panel-2: #11192b;
+}
+
 ::-webkit-scrollbar {
     display: none;
     /* Safari and Chrome */
@@ -18,6 +28,45 @@ hr {
     border: 0;
     border-top: 1px solid;
     opacity: .25;
+}
+
+.radarCityLabelIcon {
+    pointer-events: none;
+}
+
+.radarCityLabelText {
+    display: inline-block;
+    color: #b0b1c0;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-shadow:
+        1px 1px 0 rgba(0, 0, 0, 1),
+        -1px 1px 0 rgba(0, 0, 0, 1),
+        1px -1px 0 rgba(0, 0, 0, 1),
+        -1px -1px 0 rgba(0, 0, 0, 1);
+}
+
+.radarCityLabelText.is-featured {
+    color: #edeef7;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.countyNameOverlayLabel {
+    color: #ff9aa0;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.1;
+    white-space: nowrap;
+    text-shadow:
+        0 0 2px rgba(8, 12, 22, 0.92),
+        0 0 8px rgba(8, 12, 22, 0.82),
+        1px 1px 0 rgba(8, 12, 22, 0.95),
+        -1px 1px 0 rgba(8, 12, 22, 0.95),
+        1px -1px 0 rgba(8, 12, 22, 0.95),
+        -1px -1px 0 rgba(8, 12, 22, 0.95);
+    pointer-events: none;
 }
 
 .row {
@@ -75,6 +124,103 @@ hr {
 }
 .icon-blue {
     color:rgb(92, 157, 255) !important;
+}
+
+.weatherWatchSplash {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.weatherWatchSplashText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 0.9;
+}
+
+.weatherWatchWord {
+    display: inline-block;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+}
+
+.weatherWatchWordRed {
+    color: var(--ww-brand-red);
+}
+
+.weatherWatchWordBlue {
+    color: var(--ww-brand-blue);
+}
+
+.weatherWatchTitleLockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.weatherWatchBrandRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.weatherWatchLogoMark {
+    position: relative;
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+}
+
+.weatherWatchLogoMarkCompact {
+    width: 34px;
+    height: 34px;
+}
+
+.weatherWatchLogoRing {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.weatherWatchLogoRingOuter {
+    width: 92%;
+    height: 92%;
+    border: 6px solid var(--ww-brand-red);
+}
+
+.weatherWatchLogoRingInner {
+    width: 58%;
+    height: 58%;
+    border: 6px solid var(--ww-brand-blue);
+    box-shadow:
+        0 0 0 10px rgba(47, 103, 208, 0.18),
+        0 0 0 20px rgba(47, 103, 208, 0.1);
+}
+
+.weatherWatchLogoMarkCompact .weatherWatchLogoRingOuter {
+    border-width: 2.5px;
+}
+
+.weatherWatchLogoMarkCompact .weatherWatchLogoRingInner {
+    border-width: 2.5px;
+    box-shadow:
+        0 0 0 5px rgba(47, 103, 208, 0.18),
+        0 0 0 9px rgba(47, 103, 208, 0.1);
+}
+
+.weatherWatchLogoBolt {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 30%;
+    height: 82%;
+    background: linear-gradient(180deg, var(--ww-brand-red-bright), var(--ww-brand-red));
+    transform: translate(-50%, -50%) skewX(-22deg) rotate(12deg);
+    clip-path: polygon(56% 0%, 100% 0%, 52% 42%, 82% 42%, 0% 100%, 32% 55%, 2% 55%);
+    box-shadow: 0 0 18px rgba(198, 41, 47, 0.28);
 }
 
 .selectedProduct {
@@ -348,6 +494,14 @@ https://tobiasahlin.com/spinkit/
     justify-content: center;
     align-items: center;
 }
+
+#mapFooter,
+#productMapFooter {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
 .mapFooter span {
     font-size: 23px;
 }
@@ -423,6 +577,30 @@ https://tobiasahlin.com/spinkit/
 }
 .radarHeader div {
     text-align: center;
+}
+
+#radarInfoSpan {
+    display: none !important;
+}
+
+#radarHeaderCenterAction {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#radarHeaderPagesBtn {
+    display: none;
+    border: 1px solid rgba(85, 165, 255, 0.22);
+    background: linear-gradient(135deg, rgba(7, 12, 22, 0.92), rgba(19, 26, 41, 0.88));
+    color: rgb(223, 236, 250);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
 #top-left {
@@ -1654,8 +1832,8 @@ td.day.active, span.month.active, span.year.active {
 }
 
 #stormGridPreviewToggle {
-    border: 1px solid rgba(153, 205, 255, 0.35);
-    background: linear-gradient(135deg, rgba(10, 18, 34, 0.9), rgba(27, 63, 102, 0.92));
+    border: 1px solid rgba(85, 165, 255, 0.3);
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.2), rgba(27, 63, 102, 0.92));
     color: rgb(229, 241, 255);
     border-radius: 999px;
     padding: 8px 14px;
@@ -1668,8 +1846,8 @@ td.day.active, span.month.active, span.year.active {
 }
 
 #stormPagesToggle {
-    border: 1px solid rgba(153, 205, 255, 0.24);
-    background: rgba(7, 12, 22, 0.82);
+    border: 1px solid rgba(85, 165, 255, 0.22);
+    background: linear-gradient(135deg, rgba(7, 12, 22, 0.92), rgba(19, 26, 41, 0.88));
     color: rgb(223, 236, 250);
     border-radius: 999px;
     padding: 8px 14px;
@@ -1682,13 +1860,271 @@ td.day.active, span.month.active, span.year.active {
 }
 
 #stormPagesToggle:hover,
-#stormGridPreviewToggle:hover {
+#stormGridPreviewToggle:hover,
+#radarHeaderPagesBtn:hover {
     filter: brightness(1.08);
 }
 
 #stormGridPreviewToggle {
-    border-color: rgba(153, 205, 255, 0.42);
-    background: linear-gradient(135deg, rgba(22, 46, 77, 0.96), rgba(42, 103, 182, 0.96));
+    border-color: rgba(85, 165, 255, 0.42);
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.88), rgba(47, 103, 208, 0.94));
+}
+
+.weatherWatchWelcomeShell {
+    position: absolute;
+    inset: 0;
+    z-index: 2000000004;
+}
+
+.weatherWatchWelcomeBackdrop {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top left, rgba(47, 103, 208, 0.22), transparent 20rem),
+        radial-gradient(circle at top right, rgba(198, 41, 47, 0.18), transparent 18rem),
+        linear-gradient(180deg, rgba(5, 8, 15, 0.9), rgba(7, 12, 22, 0.94));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.weatherWatchWelcomePanel {
+    position: absolute;
+    inset: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+    border-radius: 30px;
+    border: 1px solid rgba(85, 165, 255, 0.16);
+    background:
+        radial-gradient(circle at top left, rgba(47, 103, 208, 0.14), transparent 24rem),
+        radial-gradient(circle at top right, rgba(198, 41, 47, 0.12), transparent 18rem),
+        linear-gradient(180deg, rgba(8, 12, 22, 0.92), rgba(10, 17, 31, 0.94));
+    box-shadow:
+        0 32px 90px rgba(0, 0, 0, 0.46),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    color: rgb(236, 242, 252);
+    overflow: auto;
+}
+
+.weatherWatchWelcomeHeader,
+.weatherWatchWelcomeFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.weatherWatchWelcomeBrand,
+.weatherWatchWelcomeHero {
+    display: grid;
+    gap: 8px;
+}
+
+.weatherWatchWelcomeHero {
+    padding: 6px 0 2px;
+}
+
+.weatherWatchWelcomeSub,
+.weatherWatchWelcomeCopy,
+.weatherWatchWelcomeFootnote {
+    color: rgba(226, 235, 250, 0.74);
+    line-height: 1.5;
+}
+
+.weatherWatchWelcomeEyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(128, 188, 255);
+}
+
+.weatherWatchWelcomeTitle {
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1.04;
+    color: white;
+}
+
+.weatherWatchWelcomeHighlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.weatherWatchWelcomeHighlight {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(85, 165, 255, 0.16);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(235, 242, 252, 0.88);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.weatherWatchWelcomeGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.weatherWatchWelcomeCard {
+    position: relative;
+    display: grid;
+    gap: 10px;
+    min-height: 280px;
+    padding: 18px;
+    border-radius: 24px;
+    border: 1px solid rgba(85, 165, 255, 0.12);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03)),
+        rgba(8, 13, 24, 0.88);
+    color: rgb(239, 244, 252);
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.weatherWatchWelcomeCard:hover {
+    transform: translateY(-2px);
+    border-color: rgba(148, 204, 255, 0.26);
+    box-shadow: 0 20px 46px rgba(0, 0, 0, 0.28);
+}
+
+.weatherWatchWelcomeCardGlow {
+    position: absolute;
+    inset: auto auto -2.5rem -2rem;
+    width: 9rem;
+    height: 9rem;
+    border-radius: 50%;
+    opacity: 0.42;
+    filter: blur(10px);
+    pointer-events: none;
+}
+
+.weatherWatchWelcomeCard-cyan .weatherWatchWelcomeCardGlow {
+    background: rgba(64, 205, 255, 0.44);
+}
+
+.weatherWatchWelcomeCard-split .weatherWatchWelcomeCardGlow {
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.6), rgba(47, 103, 208, 0.6));
+}
+
+.weatherWatchWelcomeCard-amber .weatherWatchWelcomeCardGlow {
+    background: rgba(255, 191, 71, 0.42);
+}
+
+.weatherWatchWelcomeCard-red .weatherWatchWelcomeCardGlow {
+    background: rgba(225, 70, 77, 0.42);
+}
+
+.weatherWatchWelcomeCard-violet .weatherWatchWelcomeCardGlow {
+    background: rgba(155, 120, 255, 0.42);
+}
+
+.weatherWatchWelcomeCard-blue .weatherWatchWelcomeCardGlow {
+    background: rgba(85, 165, 255, 0.42);
+}
+
+.weatherWatchWelcomeCardEyebrow {
+    position: relative;
+    z-index: 1;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(167, 197, 229, 0.76);
+}
+
+.weatherWatchWelcomeCardTitle {
+    position: relative;
+    z-index: 1;
+    font-size: 21px;
+    font-weight: 900;
+    line-height: 1.12;
+    color: white;
+}
+
+.weatherWatchWelcomeCardCopy {
+    position: relative;
+    z-index: 1;
+    color: rgba(229, 237, 249, 0.8);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.weatherWatchWelcomeCardMeta {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.weatherWatchWelcomeCardTag {
+    display: inline-flex;
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: rgba(244, 248, 253, 0.92);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.weatherWatchWelcomeCardDetail {
+    color: rgba(216, 228, 245, 0.82);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.weatherWatchWelcomeCardCta {
+    position: relative;
+    z-index: 1;
+    align-self: end;
+    margin-top: auto;
+    display: inline-flex;
+    width: fit-content;
+    padding: 9px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgb(239, 244, 252);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.weatherWatchWelcomeClose,
+.weatherWatchWelcomeExplore {
+    border: 1px solid rgba(85, 165, 255, 0.14);
+    border-radius: 999px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.weatherWatchWelcomeClose {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgb(225, 235, 248);
+}
+
+.weatherWatchWelcomeExplore {
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.88), rgba(47, 103, 208, 0.94));
+    color: white;
+}
+
+body.weatherWatchWelcomeOpen #stormPagesShell,
+body.weatherWatchWelcomeOpen #stormGridPreview {
+    pointer-events: none;
 }
 
 .stormPagesShell {
@@ -1706,7 +2142,10 @@ td.day.active, span.month.active, span.year.active {
 .stormPagesPanel {
     position: absolute;
     inset: 0;
-    background: transparent;
+    background:
+        radial-gradient(circle at top left, rgba(47, 103, 208, 0.14), transparent 16rem),
+        radial-gradient(circle at top right, rgba(198, 41, 47, 0.12), transparent 14rem),
+        linear-gradient(180deg, rgba(5, 7, 13, 0.96), rgba(11, 17, 31, 0.96));
     color: rgb(233, 240, 250);
     display: flex;
     flex-direction: column;
@@ -1718,7 +2157,8 @@ td.day.active, span.month.active, span.year.active {
     align-items: center;
     gap: 12px;
     padding: 14px 16px 8px;
-    background: linear-gradient(180deg, rgba(20, 29, 53, 0.96), rgba(25, 30, 47, 0.94));
+    background:
+        linear-gradient(180deg, rgba(18, 24, 40, 0.97), rgba(13, 18, 31, 0.96));
     border-bottom: none;
 }
 
@@ -1726,7 +2166,7 @@ td.day.active, span.month.active, span.year.active {
     font-size: 22px;
     font-weight: 900;
     line-height: 1;
-    color: #7dd7ff;
+    color: #f3f7ff;
 }
 
 .stormPagesBrandSub {
@@ -1744,8 +2184,8 @@ td.day.active, span.month.active, span.year.active {
 }
 
 .stormPagesHeaderBtn {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(85, 165, 255, 0.14);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
     color: rgb(235, 239, 248);
     border-radius: 999px;
     padding: 8px 14px;
@@ -1762,7 +2202,7 @@ td.day.active, span.month.active, span.year.active {
 
 .stormPagesTabbar {
     padding: 10px 16px 12px;
-    background: linear-gradient(180deg, rgba(25, 30, 47, 0.94), rgba(24, 30, 45, 0.96));
+    background: linear-gradient(180deg, rgba(18, 24, 40, 0.96), rgba(13, 18, 31, 0.96));
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -1774,8 +2214,8 @@ td.day.active, span.month.active, span.year.active {
 }
 
 .stormPagesNavBtn {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(85, 165, 255, 0.12);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.04));
     color: rgb(220, 232, 246);
     border-radius: 16px;
     padding: 9px 16px;
@@ -1785,7 +2225,7 @@ td.day.active, span.month.active, span.year.active {
 }
 
 .stormPagesNavBtn.is-active {
-    background: linear-gradient(135deg, #5dd7ff, #8f79ff);
+    background: linear-gradient(135deg, var(--ww-brand-blue-bright), #8f79ff);
     border-color: transparent;
     color: white;
 }
@@ -1832,16 +2272,26 @@ td.day.active, span.month.active, span.year.active {
 .stormPagesContent {
     overflow: auto;
     padding: 0;
-    background: linear-gradient(180deg, #0b1120 0%, #0b1120 38%, #4a5568 100%);
+    background:
+        radial-gradient(circle at top left, rgba(47, 103, 208, 0.12), transparent 20rem),
+        radial-gradient(circle at top right, rgba(198, 41, 47, 0.1), transparent 18rem),
+        linear-gradient(180deg, #070a12 0%, #0b1120 42%, #2f3c53 100%);
 }
 
-.stormPagesPanel.stormPagesGridMode .stormPagesTopbar,
+.stormPagesPanel.stormPagesGridMode .stormPagesTopbar {
+    display: flex;
+}
+
 .stormPagesPanel.stormPagesGridMode .stormPagesTabbar {
-    display: none;
+    display: block;
 }
 
 .stormPagesPanel.stormPagesGridMode .stormPagesContent {
-    background: transparent;
+    padding: 14px;
+    background:
+        radial-gradient(circle at top left, rgba(47, 103, 208, 0.18), transparent 22rem),
+        radial-gradient(circle at top right, rgba(198, 41, 47, 0.14), transparent 18rem),
+        linear-gradient(180deg, #070b14 0%, #09111d 44%, #13233a 100%);
 }
 
 .stormPagesActionBtn,
@@ -1849,10 +2299,10 @@ td.day.active, span.month.active, span.year.active {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(85, 165, 255, 0.12);
     border-radius: 12px;
     padding: 10px 14px;
-    background: rgba(21, 28, 43, 0.92);
+    background: linear-gradient(180deg, rgba(21, 28, 43, 0.95), rgba(15, 22, 34, 0.92));
     color: rgb(226, 235, 246);
     text-decoration: none;
     cursor: pointer;
@@ -1866,7 +2316,7 @@ td.day.active, span.month.active, span.year.active {
     align-items: center;
     gap: 12px;
     padding: 12px 16px;
-    background: rgba(11, 17, 32, 0.96);
+    background: linear-gradient(180deg, rgba(11, 17, 32, 0.98), rgba(13, 20, 33, 0.95));
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -1896,7 +2346,42 @@ td.day.active, span.month.active, span.year.active {
 
 .stormPagesPanel.stormPagesGridMode .stormPagesStage,
 .stormPagesPanel.stormPagesGridMode .stormPagesEmbedFrame {
-    min-height: 100vh;
+    min-height: calc(100vh - 118px);
+}
+
+.stormPagesPanel.stormPagesGridMode .stormPagesStage {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    border: 1px solid rgba(85, 165, 255, 0.16);
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    background:
+        radial-gradient(circle at top left, rgba(47, 103, 208, 0.08), transparent 14rem),
+        radial-gradient(circle at top right, rgba(198, 41, 47, 0.08), transparent 12rem),
+        rgba(7, 12, 22, 0.88);
+}
+
+.stormPagesPanel.stormPagesGridMode .stormPagesStage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 24%),
+        radial-gradient(circle at 12% 0%, rgba(85, 165, 255, 0.14), transparent 24%),
+        radial-gradient(circle at 88% 0%, rgba(198, 41, 47, 0.12), transparent 20%);
+    z-index: 1;
+}
+
+.stormPagesPanel.stormPagesGridMode .stormPagesEmbedFrame {
+    position: relative;
+    display: block;
+    border-radius: inherit;
+    background: transparent;
+    z-index: 0;
 }
 
 .stormPagesNativeRadarStage {
@@ -1905,8 +2390,11 @@ td.day.active, span.month.active, span.year.active {
 
 .stormPagesNativeRadarCard {
     border-radius: 22px;
-    background: rgba(21, 28, 43, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+        radial-gradient(circle at top left, rgba(198, 41, 47, 0.1), transparent 12rem),
+        radial-gradient(circle at top right, rgba(47, 103, 208, 0.12), transparent 12rem),
+        rgba(21, 28, 43, 0.94);
+    border: 1px solid rgba(85, 165, 255, 0.12);
     padding: 20px;
     color: white;
 }
@@ -1941,28 +2429,41 @@ td.day.active, span.month.active, span.year.active {
     width: 220px;
     padding: 14px;
     border-radius: 24px;
-    background: linear-gradient(180deg, rgba(8, 14, 26, 0.9), rgba(12, 21, 38, 0.82));
-    border: 1px solid rgba(130, 181, 235, 0.12);
+    background:
+        radial-gradient(circle at top left, rgba(198, 41, 47, 0.12), transparent 10rem),
+        radial-gradient(circle at top right, rgba(47, 103, 208, 0.16), transparent 10rem),
+        linear-gradient(180deg, rgba(8, 14, 26, 0.94), rgba(12, 21, 38, 0.84));
+    border: 1px solid rgba(85, 165, 255, 0.12);
     box-shadow: 0 22px 50px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
 
-body.stormGridWorkspacePrimary #mapFooter {
-    opacity: 0.58;
-    transition: opacity 0.2s ease;
+body.stormGridWorkspacePrimary #mapFooter,
+body.stormGridWorkspacePrimary .mapFooter {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
+
+body.stormGridWorkspacePrimary #productMapFooter {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+body.stormGridWorkspacePrimary #mapColorScale {
+    display: none !important;
 }
 
 body.stormGridWorkspacePrimary #stationMenuItemDiv,
 body.stormGridWorkspacePrimary #alertMenuItemDiv,
+body.stormGridWorkspacePrimary #metarStationMenuItemDiv,
+body.stormGridWorkspacePrimary #colorPickerItemDiv,
 body.stormGridWorkspacePrimary #drawMenuItemDiv,
 body.stormGridWorkspacePrimary #settingsItemDiv {
-    display: none;
-}
-
-body.stormGridWorkspacePrimary #metarStationMenuItemDiv,
-body.stormGridWorkspacePrimary #colorPickerItemDiv {
-    opacity: 0.55;
+    display: none !important;
 }
 
 body.stormGridWorkspacePrimary #radarHeader {
@@ -2065,16 +2566,91 @@ body.stormGridWorkspacePrimary #stormGridPreviewToggle {
 .stormGridSidebarCard {
     padding: 16px;
     border-radius: 20px;
-    background: linear-gradient(180deg, rgba(8, 14, 26, 0.88), rgba(12, 21, 38, 0.8));
-    border: 1px solid rgba(130, 181, 235, 0.12);
+    background: linear-gradient(180deg, rgba(8, 14, 26, 0.9), rgba(12, 21, 38, 0.84));
+    border: 1px solid rgba(85, 165, 255, 0.12);
     box-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
 
+.stormGridSidebarProductCard {
+    display: grid;
+    gap: 12px;
+}
+
+.stormGridProductTrigger {
+    width: 100%;
+    display: grid;
+    gap: 4px;
+    text-align: left;
+    padding: 15px 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(132, 185, 247, 0.18);
+    background:
+        linear-gradient(135deg, rgba(50, 108, 195, 0.24), rgba(112, 70, 192, 0.18)),
+        rgba(255, 255, 255, 0.04);
+    color: rgb(234, 241, 250);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 12px 24px rgba(0, 0, 0, 0.18);
+    cursor: pointer;
+}
+
+.stormGridProductTrigger:hover {
+    border-color: rgba(157, 203, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.stormGridProductTriggerLabel {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(167, 195, 226, 0.72);
+}
+
+.stormGridProductTriggerValue {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: white;
+}
+
+.stormGridProductTriggerMeta {
+    font-size: 12px;
+    color: rgba(201, 218, 238, 0.84);
+}
+
+.stormGridProductSubRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.stormGridMiniStat {
+    display: grid;
+    gap: 3px;
+    padding: 11px 12px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(152, 191, 232, 0.08);
+}
+
+.stormGridMiniStatLabel {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(167, 195, 226, 0.68);
+}
+
+.stormGridMiniStatValue {
+    color: rgb(230, 239, 250);
+    font-size: 13px;
+    font-weight: 600;
+}
+
 .stormGridSidebarHero {
     background:
-        radial-gradient(circle at top left, rgba(74, 163, 255, 0.22), rgba(74, 163, 255, 0) 44%),
+        radial-gradient(circle at top left, rgba(198, 41, 47, 0.18), rgba(198, 41, 47, 0) 38%),
+        radial-gradient(circle at top right, rgba(74, 163, 255, 0.22), rgba(74, 163, 255, 0) 44%),
         linear-gradient(180deg, rgba(8, 14, 26, 0.94), rgba(12, 21, 38, 0.84));
 }
 
@@ -2117,19 +2693,25 @@ body.stormGridWorkspacePrimary #stormGridPreviewToggle {
 
 .stormGridToolbarBtn,
 .stormGridSegmentBtn {
-    border: 1px solid rgba(152, 191, 232, 0.12);
+    border: 1px solid rgba(85, 165, 255, 0.14);
     border-radius: 14px;
     padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.035));
     color: rgb(220, 232, 246);
     font-size: 12px;
     font-weight: 700;
     cursor: pointer;
 }
 
+.stormGridToolbarBtn-accent {
+    background: linear-gradient(135deg, var(--ww-brand-red), var(--ww-brand-blue));
+    border-color: rgba(167, 210, 255, 0.3);
+    color: white;
+}
+
 .stormGridToolbarBtn.is-active,
 .stormGridSegmentBtn.is-active {
-    background: linear-gradient(135deg, rgba(49, 124, 220, 0.9), rgba(33, 88, 166, 0.9));
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.84), rgba(47, 103, 208, 0.9));
     border-color: rgba(146, 198, 255, 0.34);
     color: white;
 }
@@ -2160,8 +2742,10 @@ body.stormGridWorkspacePrimary #stormGridPreviewToggle {
 .stormGridSummaryCard {
     padding: 14px 16px;
     border-radius: 20px;
-    background: linear-gradient(180deg, rgba(8, 14, 26, 0.84), rgba(12, 21, 38, 0.74));
-    border: 1px solid rgba(130, 181, 235, 0.12);
+    background:
+        radial-gradient(circle at top left, rgba(47, 103, 208, 0.12), transparent 8rem),
+        linear-gradient(180deg, rgba(8, 14, 26, 0.84), rgba(12, 21, 38, 0.74));
+    border: 1px solid rgba(85, 165, 255, 0.12);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.24);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -2414,6 +2998,11 @@ body.stormPagesPrimaryApp #stormPagesToggle {
     border-color: rgba(146, 198, 255, 0.34);
 }
 
+body.stormPagesPrimaryApp #radarHeaderPagesBtn {
+    background: linear-gradient(135deg, rgb(62, 127, 212), rgb(26, 90, 171));
+    border-color: rgba(146, 198, 255, 0.34);
+}
+
 body.stormPagesPrimaryApp #stormGridPreviewToggle {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(153, 205, 255, 0.18);
@@ -2421,6 +3010,39 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 }
 
 @media only screen and (max-width: 700px) {
+    .weatherWatchWelcomePanel {
+        inset: 10px;
+        padding: 16px;
+        border-radius: 22px;
+    }
+
+    .weatherWatchWelcomeHeader,
+    .weatherWatchWelcomeFooter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .weatherWatchWelcomeTitle {
+        font-size: 26px;
+    }
+
+    .weatherWatchWelcomeHighlights {
+        gap: 8px;
+    }
+
+    .weatherWatchWelcomeHighlight {
+        font-size: 11px;
+        padding: 7px 10px;
+    }
+
+    .weatherWatchWelcomeGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .weatherWatchWelcomeCard {
+        min-height: 0;
+    }
+
     .stormGridCommandDock,
     .stormGridSummaryRail {
         position: fixed;
@@ -2496,8 +3118,10 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
     align-items: center;
     gap: 12px;
     padding: 10px 16px;
-    background: rgba(11, 17, 32, 0.97);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    background:
+        radial-gradient(circle at left center, rgba(47, 103, 208, 0.12), transparent 12rem),
+        linear-gradient(180deg, rgba(11, 17, 32, 0.98), rgba(13, 20, 33, 0.95));
+    border-bottom: 1px solid rgba(85, 165, 255, 0.12);
     flex-shrink: 0;
 }
 
@@ -2510,7 +3134,28 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 .wwBarTitle {
     font-size: 15px;
     font-weight: 900;
-    color: #7dd7ff;
+    color: #f3f7ff;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wwBarTitle::before,
+.pgBarTitle::before,
+.pgAboutTitle::before,
+.pgHelpTitle::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background:
+        linear-gradient(135deg, transparent 34%, var(--ww-brand-red) 34%, var(--ww-brand-red) 61%, transparent 61%),
+        radial-gradient(circle at center, transparent 27%, var(--ww-brand-blue) 29%, var(--ww-brand-blue) 37%, transparent 39%),
+        radial-gradient(circle at center, transparent 49%, var(--ww-brand-blue) 51%, var(--ww-brand-blue) 58%, transparent 60%);
+    box-shadow:
+        inset 0 0 0 2px var(--ww-brand-red),
+        0 0 10px rgba(47, 103, 208, 0.18);
 }
 
 .wwBarSub {
@@ -2527,8 +3172,8 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 
 /* Shared control widgets */
 .wwSearchInput {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(85, 165, 255, 0.14);
     border-radius: 8px;
     color: rgb(225, 235, 248);
     font-size: 12px;
@@ -2551,8 +3196,8 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 }
 
 .wwSelect {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(85, 165, 255, 0.14);
     border-radius: 8px;
     color: rgb(225, 235, 248);
     font-size: 12px;
@@ -2561,8 +3206,8 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 }
 
 .wwBtn {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(85, 165, 255, 0.14);
     border-radius: 999px;
     color: rgb(225, 235, 248);
     font-size: 12px;
@@ -2573,7 +3218,7 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 }
 
 .wwBtn:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.14), rgba(47, 103, 208, 0.16));
 }
 
 .wwBtnSecondary {
@@ -2603,14 +3248,17 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 
 /* Tile */
 .wwTile {
-    background: rgba(5, 6, 18, 0.75);
+    background:
+        radial-gradient(circle at top left, rgba(198, 41, 47, 0.08), transparent 9rem),
+        radial-gradient(circle at top right, rgba(47, 103, 208, 0.12), transparent 10rem),
+        rgba(5, 6, 18, 0.82);
     border-radius: 14px;
     overflow: hidden;
     width: clamp(220px, var(--ww-tile-w, 32vw), var(--ww-tile-max, 420px));
     aspect-ratio: 16 / 9;
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(85, 165, 255, 0.12);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
     cursor: default;
 }
@@ -2620,13 +3268,14 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 }
 
 .wwTile.wwDragOver {
-    outline: 2px dashed rgba(125, 215, 255, 0.75);
+    outline: 2px dashed rgba(85, 165, 255, 0.75);
     outline-offset: 2px;
 }
 
 .wwTileHeader {
     padding: 6px 10px;
-    background: linear-gradient(180deg, rgba(12, 14, 33, 0.94), rgba(6, 8, 18, 0.88));
+    background:
+        linear-gradient(180deg, rgba(14, 18, 36, 0.96), rgba(6, 8, 18, 0.9));
     flex-shrink: 0;
 }
 
@@ -2678,9 +3327,9 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 }
 
 .wwMiniBtnOn {
-    background: rgba(125, 215, 255, 0.15);
-    border: 1px solid rgba(125, 215, 255, 0.35);
-    color: #7dd7ff;
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.16), rgba(47, 103, 208, 0.18));
+    border: 1px solid rgba(85, 165, 255, 0.35);
+    color: #eef6ff;
 }
 
 .wwDragHandle {
@@ -2730,7 +3379,7 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 /* Tile footer */
 .wwTileFooter {
     padding: 4px 10px;
-    background: rgba(6, 8, 18, 0.88);
+    background: linear-gradient(180deg, rgba(6, 8, 18, 0.9), rgba(11, 17, 31, 0.92));
     min-height: 22px;
     display: flex;
     align-items: center;
@@ -2796,8 +3445,10 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
     align-items: center;
     gap: 8px;
     padding: 10px 14px;
-    background: rgba(11, 17, 32, 0.97);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    background:
+        radial-gradient(circle at left center, rgba(47, 103, 208, 0.12), transparent 12rem),
+        linear-gradient(180deg, rgba(11, 17, 32, 0.98), rgba(13, 20, 33, 0.95));
+    border-bottom: 1px solid rgba(85, 165, 255, 0.12);
     flex-shrink: 0;
     flex-wrap: wrap;
 }
@@ -2805,7 +3456,7 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 .wwFullTitle {
     font-size: 14px;
     font-weight: 800;
-    color: #7dd7ff;
+    color: #f3f7ff;
     margin-left: 8px;
 }
 
@@ -2834,14 +3485,16 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px;
-    background: rgba(11, 17, 32, 0.97);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    background:
+        radial-gradient(circle at left center, rgba(198, 41, 47, 0.1), transparent 10rem),
+        linear-gradient(180deg, rgba(11, 17, 32, 0.98), rgba(13, 20, 33, 0.95));
+    border-bottom: 1px solid rgba(85, 165, 255, 0.12);
     flex-shrink: 0;
 }
 
 .wwManageHeading {
     font-size: 15px;
-    color: #7dd7ff;
+    color: #f3f7ff;
 }
 
 .wwManageList,
@@ -2878,8 +3531,8 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
     flex-wrap: wrap;
     gap: 8px;
     padding: 12px 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-    background: rgba(11, 17, 32, 0.97);
+    border-top: 1px solid rgba(85, 165, 255, 0.12);
+    background: linear-gradient(180deg, rgba(11, 17, 32, 0.98), rgba(13, 20, 33, 0.95));
     flex-shrink: 0;
 }
 
@@ -2947,8 +3600,10 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
     align-items: center;
     gap: 10px;
     padding: 10px 16px;
-    background: rgba(11, 17, 32, 0.97);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+    background:
+        radial-gradient(circle at left center, rgba(198, 41, 47, 0.1), transparent 10rem),
+        linear-gradient(180deg, rgba(11, 17, 32, 0.98), rgba(13, 20, 33, 0.95));
+    border-bottom: 1px solid rgba(85,165,255,0.12);
     flex-shrink: 0;
     flex-wrap: wrap;
 }
@@ -2969,7 +3624,10 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 .pgBarTitle {
     font-size: 15px;
     font-weight: 900;
-    color: #7dd7ff;
+    color: #f3f7ff;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .pgBarSub {
@@ -2994,16 +3652,40 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 
 /* Cards */
 .pgCard {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.07);
+    background:
+        radial-gradient(circle at top left, rgba(47, 103, 208, 0.08), transparent 10rem),
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.03));
+    border: 1px solid rgba(85,165,255,0.12);
     border-radius: 12px;
     padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.pgCard::after,
+.wwTileHeader::after,
+.wwManageTopbar::after,
+.wwFullBar::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    opacity: 0.12;
+    pointer-events: none;
+    background:
+        linear-gradient(135deg, transparent 34%, var(--ww-brand-red) 34%, var(--ww-brand-red) 61%, transparent 61%),
+        radial-gradient(circle at center, transparent 27%, var(--ww-brand-blue) 29%, var(--ww-brand-blue) 37%, transparent 39%),
+        radial-gradient(circle at center, transparent 49%, var(--ww-brand-blue) 51%, var(--ww-brand-blue) 58%, transparent 60%);
+    box-shadow: inset 0 0 0 3px var(--ww-brand-red);
 }
 
 .pgCardTitle {
     font-size: 13px;
     font-weight: 800;
-    color: #7dd7ff;
+    color: #f3f7ff;
     margin-bottom: 8px;
 }
 
@@ -3015,8 +3697,8 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 
 .pgBadge {
     display: inline-block;
-    background: rgba(125,215,255,0.15);
-    color: #7dd7ff;
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.16), rgba(47, 103, 208, 0.18));
+    color: #eef6ff;
     border-radius: 999px;
     padding: 1px 8px;
     font-size: 11px;
@@ -3028,8 +3710,8 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 .pgToggleBtn {
     padding: 5px 14px;
     border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(85,165,255,0.14);
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
     color: rgba(220,232,248,0.9);
     font-size: 12px;
     font-weight: 700;
@@ -3038,9 +3720,9 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 }
 
 .pgToggleBtnActive {
-    background: rgba(125,215,255,0.18);
-    border-color: rgba(125,215,255,0.45);
-    color: #7dd7ff;
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.16), rgba(47, 103, 208, 0.18));
+    border-color: rgba(85,165,255,0.45);
+    color: #eef6ff;
 }
 
 /* Day/mode selector buttons */
@@ -3048,8 +3730,8 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 .pgModeBtn {
     padding: 4px 10px;
     border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(85,165,255,0.12);
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.035));
     color: rgba(215,228,246,0.8);
     font-size: 11px;
     font-weight: 700;
@@ -3059,9 +3741,9 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 
 .pgDayBtnActive,
 .pgModeBtnActive {
-    background: rgba(125,215,255,0.2);
-    border-color: rgba(125,215,255,0.5);
-    color: #7dd7ff;
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.16), rgba(47, 103, 208, 0.18));
+    border-color: rgba(85,165,255,0.45);
+    color: #eef6ff;
 }
 
 /* External links */
@@ -3070,8 +3752,8 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
     align-items: center;
     padding: 7px 14px;
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(85,165,255,0.12);
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
     color: rgba(200,225,248,0.9);
     text-decoration: none;
     font-size: 12px;
@@ -3080,8 +3762,8 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 }
 
 .pgExtLink:hover {
-    background: rgba(255,255,255,0.09);
-    color: #7dd7ff;
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.14), rgba(47, 103, 208, 0.16));
+    color: #eef6ff;
 }
 
 .pgLinkRow {
@@ -3101,16 +3783,20 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
     justify-content: space-between;
     gap: 12px;
     padding: 14px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(85, 165, 255, 0.12);
     border-radius: 14px;
-    background: rgba(16, 22, 36, 0.92);
+    background:
+        radial-gradient(circle at top left, rgba(198, 41, 47, 0.08), transparent 9rem),
+        linear-gradient(180deg, rgba(16, 22, 36, 0.95), rgba(13, 18, 29, 0.94));
     color: rgb(225, 235, 247);
     text-decoration: none;
 }
 
 .pgWebsiteItem:hover {
-    border-color: rgba(93, 215, 255, 0.28);
-    background: rgba(20, 29, 46, 0.98);
+    border-color: rgba(85, 165, 255, 0.28);
+    background:
+        radial-gradient(circle at top left, rgba(198, 41, 47, 0.1), transparent 9rem),
+        linear-gradient(180deg, rgba(20, 29, 46, 0.99), rgba(16, 22, 36, 0.98));
 }
 
 .pgWebsiteName {
@@ -3118,7 +3804,7 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 }
 
 .pgWebsiteRating {
-    color: #7dd9ff;
+    color: #eef6ff;
     font-weight: 700;
     white-space: nowrap;
 }
@@ -3135,6 +3821,273 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
     max-width: 100%;
     border-radius: 10px;
     border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ==========================================================================
+   WeatherWatch Academy
+   ========================================================================== */
+
+.wwAcademyWrap {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 16px;
+}
+
+.wwAcademyGrid {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.wwAcademySidebar,
+.wwAcademyMain,
+.wwAcademyMetaRow,
+.wwAcademyContentGrid,
+.wwAcademyStack,
+.wwAcademyLessonRail,
+.wwAcademyChecklist,
+.wwAcademyQuizList {
+    display: grid;
+    gap: 14px;
+}
+
+.wwAcademySidebarCard,
+.wwAcademyHeroCard,
+.wwAcademyCard,
+.wwAcademyCalloutCard,
+.wwAcademyPracticeCard {
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    border: 1px solid rgba(85, 165, 255, 0.14);
+    background:
+        radial-gradient(circle at top left, rgba(47, 103, 208, 0.12), transparent 12rem),
+        radial-gradient(circle at top right, rgba(198, 41, 47, 0.08), transparent 10rem),
+        linear-gradient(180deg, rgba(12, 18, 31, 0.96), rgba(10, 16, 27, 0.94));
+    color: rgb(235, 243, 253);
+    box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
+}
+
+.wwAcademySidebarCard,
+.wwAcademyCard,
+.wwAcademyCalloutCard,
+.wwAcademyPracticeCard {
+    padding: 18px;
+}
+
+.wwAcademySidebarHero,
+.wwAcademyHeroCard {
+    padding: 20px;
+}
+
+.wwAcademySidebarHero {
+    background:
+        radial-gradient(circle at top left, rgba(198, 41, 47, 0.18), transparent 12rem),
+        radial-gradient(circle at top right, rgba(47, 103, 208, 0.22), transparent 11rem),
+        linear-gradient(180deg, rgba(12, 18, 31, 0.98), rgba(10, 16, 27, 0.95));
+}
+
+.wwAcademyEyebrow,
+.wwAcademySectionTitle,
+.wwAcademyMiniStatLabel,
+.wwAcademyCalloutLabel {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.wwAcademyEyebrow,
+.wwAcademySectionTitle,
+.wwAcademyMiniStatLabel {
+    color: rgb(129, 187, 252);
+}
+
+.wwAcademyCalloutLabel {
+    color: rgba(233, 242, 252, 0.72);
+}
+
+.wwAcademySidebarTitle,
+.wwAcademyTitle {
+    color: white;
+    font-weight: 900;
+    line-height: 1.06;
+}
+
+.wwAcademySidebarTitle {
+    margin-top: 8px;
+    font-size: 25px;
+}
+
+.wwAcademyTitle {
+    margin-top: 8px;
+    font-size: 35px;
+}
+
+.wwAcademySidebarCopy,
+.wwAcademyLead,
+.wwAcademyCardBody,
+.wwAcademyCalloutText,
+.wwAcademyLessonRailMeta {
+    color: rgba(224, 235, 250, 0.82);
+    line-height: 1.6;
+    font-size: 13px;
+}
+
+.wwAcademyChipRow,
+.wwAcademyActionRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.wwAcademyChip {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 12px;
+    font-weight: 700;
+    color: rgb(234, 241, 252);
+}
+
+.wwAcademyMetaRow,
+.wwAcademyContentGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.wwAcademyContentGrid-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.wwAcademyMiniStat {
+    padding: 14px;
+    border-radius: 18px;
+    border: 1px solid rgba(152, 191, 232, 0.1);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.wwAcademyMiniStatValue {
+    margin-top: 8px;
+    color: rgb(241, 246, 255);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.wwAcademyCardTitle,
+.wwAcademyLessonRailTitle {
+    font-size: 18px;
+    font-weight: 850;
+    color: rgb(244, 248, 255);
+}
+
+.wwAcademyLessonRailItem {
+    padding: 14px;
+    border-radius: 18px;
+    border: 1px solid rgba(152, 191, 232, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.wwAcademyLessonRailItem.is-active {
+    background:
+        radial-gradient(circle at top left, rgba(198, 41, 47, 0.14), transparent 9rem),
+        linear-gradient(180deg, rgba(39, 79, 144, 0.18), rgba(255, 255, 255, 0.04));
+    border-color: rgba(148, 204, 255, 0.24);
+}
+
+.wwAcademyLessonRailItem.is-locked {
+    opacity: 0.7;
+}
+
+.wwAcademyCalloutCard {
+    background:
+        radial-gradient(circle at top left, rgba(198, 41, 47, 0.18), transparent 12rem),
+        linear-gradient(180deg, rgba(19, 28, 45, 0.96), rgba(12, 18, 30, 0.94));
+}
+
+.wwAcademyCalloutCard-blue {
+    background:
+        radial-gradient(circle at top left, rgba(47, 103, 208, 0.2), transparent 12rem),
+        linear-gradient(180deg, rgba(19, 28, 45, 0.96), rgba(12, 18, 30, 0.94));
+}
+
+.wwAcademyCalloutCard-red {
+    background:
+        radial-gradient(circle at top left, rgba(198, 41, 47, 0.22), transparent 12rem),
+        linear-gradient(180deg, rgba(28, 22, 30, 0.96), rgba(15, 16, 26, 0.94));
+}
+
+.wwAcademyChecklistItem,
+.wwAcademyQuizItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: rgba(233, 240, 250, 0.9);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.wwAcademyChecklistItem::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    margin-top: 5px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ww-brand-red), var(--ww-brand-blue));
+    box-shadow: 0 0 0 3px rgba(85, 165, 255, 0.08);
+}
+
+.wwAcademyQuizNumber {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.84), rgba(47, 103, 208, 0.9));
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.wwAcademyDivider {
+    height: 1px;
+    margin: 12px 0;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+@media only screen and (max-width: 1100px) {
+    .wwAcademyGrid,
+    .wwAcademyMetaRow,
+    .wwAcademyContentGrid,
+    .wwAcademyContentGrid-two {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .wwAcademyWrap {
+        padding: 10px;
+    }
+
+    .wwAcademyTitle {
+        font-size: 28px;
+    }
+
+    .wwAcademySidebarTitle {
+        font-size: 22px;
+    }
 }
 
 .pgImageCaption {
@@ -3548,7 +4501,10 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 .pgHelpTitle {
     font-size: 14px;
     font-weight: 800;
-    color: #7dd7ff;
+    color: #f3f7ff;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .pgHelpBody {
@@ -3574,8 +4530,11 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
 .pgAboutTitle {
     font-size: 36px;
     font-weight: 900;
-    color: #7dd7ff;
+    color: #f3f7ff;
     line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .pgAboutSub {
@@ -3596,4 +4555,303 @@ body.stormPagesPrimaryApp #stormGridPreviewToggle {
     height: 100%;
     border: none;
     display: block;
+}
+ {}
+
+/* ==========================================================================
+   WEATHERWATCH BRAND THEME
+   Applies the logo palette (red #c6292f · blue #2f67d0 · ink #05070d)
+   to all legacy/non-radar UI chrome. The newer stormGrid/stormPages
+   components already use these values; this block catches the rest.
+   ========================================================================== */
+
+/* ── Top header bar ────────────────────────────────────────────────────── */
+.radarHeader {
+    background:
+        radial-gradient(circle at 15% 50%, rgba(198, 41, 47, 0.10), transparent 18rem),
+        radial-gradient(circle at 85% 50%, rgba(47, 103, 208, 0.12), transparent 18rem),
+        linear-gradient(180deg, rgba(5, 7, 13, 0.99) 0%, rgba(8, 12, 22, 0.98) 100%);
+    border-bottom: 1px solid rgba(47, 103, 208, 0.18);
+    color: rgb(228, 237, 252);
+}
+
+/* ── Bottom footer bar ─────────────────────────────────────────────────── */
+.mapFooter {
+    background:
+        linear-gradient(180deg, rgba(7, 10, 19, 0.99), rgba(5, 7, 13, 0.99));
+    border-top: 1px solid rgba(47, 103, 208, 0.15);
+}
+
+/* ── Footer icon selected state ────────────────────────────────────────── */
+.menu_item_selected {
+    border: 7px solid var(--ww-brand-blue) !important;
+    background: var(--ww-brand-blue) !important;
+    color: #fff !important;
+}
+
+/* ── Product map footer (radar controls strip) ─────────────────────────── */
+#productMapFooter {
+    background: rgba(5, 7, 13, 0.98);
+    border-top: 1px solid rgba(47, 103, 208, 0.14);
+}
+
+/* ── Progress bar (data loading indicator) ─────────────────────────────── */
+.progressBar {
+    background: linear-gradient(90deg, var(--ww-brand-red), var(--ww-brand-blue));
+}
+
+/* ── Slide-up menu container ───────────────────────────────────────────── */
+#atticRadarMenuContainer {
+    background: var(--ww-brand-panel);
+    border-color: rgba(47, 103, 208, 0.22);
+    border-top: 1px solid rgba(47, 103, 208, 0.22);
+    border-left: 1px solid rgba(47, 103, 208, 0.22);
+    border-right: 1px solid rgba(47, 103, 208, 0.22);
+}
+
+#atticRadarMenuBody {
+    color: rgb(190, 205, 228);
+}
+
+/* ── Menu rows ─────────────────────────────────────────────────────────── */
+.atticRadarMenuRow {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(85, 165, 255, 0.08);
+    color: rgb(221, 233, 247);
+}
+
+.atticRadarMenuRow:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(85, 165, 255, 0.16);
+    cursor: pointer;
+}
+
+.atticRadarMenuRow:active {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.armrSlideDown {
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(85, 165, 255, 0.08);
+}
+
+/* ── Menu icons ────────────────────────────────────────────────────────── */
+.armrIcon          { color: rgb(110, 145, 185); }
+.armrIcon-Red      { color: var(--ww-brand-red-bright); }
+.armrIcon-Blue     { color: var(--ww-brand-blue-bright); }
+.armrIcon-Green    { color: rgb(79, 183, 94); }
+.armrText-Red      { color: var(--ww-brand-red-bright); }
+.armrText-Green    { color: rgb(49, 163, 74); }
+.armrIconArrowRight { color: rgb(90, 120, 160); }
+
+/* Back/exit buttons in sub-screens */
+.armsHeaderBackBtn { color: var(--ww-brand-blue-bright); }
+.armsHeaderBackBtn:hover { color: var(--ww-brand-blue); }
+
+/* ── Attic dialog (alerts, discussions, etc.) ──────────────────────────── */
+#atticDialogContainer {
+    background: var(--ww-brand-panel);
+    border-color: rgba(47, 103, 208, 0.22);
+    color: rgb(195, 210, 232);
+}
+
+#atticDialogHeaderContainer {
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.88), rgba(47, 103, 208, 0.88));
+    color: #fff;
+}
+
+/* ── ATC dialog (station/product dialogs) ──────────────────────────────── */
+#atcDlgHeader {
+    background: linear-gradient(135deg, rgba(198, 41, 47, 0.84), rgba(47, 103, 208, 0.90));
+    color: #fff;
+    border-color: rgba(47, 103, 208, 0.28);
+}
+
+#atcDlgBody {
+    background: var(--ww-brand-panel);
+    color: rgb(205, 220, 240);
+    border-color: rgba(47, 103, 208, 0.18);
+}
+
+/* ── Product selection menu ────────────────────────────────────────────── */
+#productSelectionMenu {
+    background:
+        radial-gradient(circle at top left, rgba(85, 165, 255, 0.16), transparent 30%),
+        linear-gradient(180deg, rgba(9, 15, 28, 0.98), rgba(13, 21, 38, 0.96));
+    border: 1px solid rgba(85, 165, 255, 0.22);
+    border-radius: 22px;
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 18px 20px;
+    color: rgb(228, 237, 250);
+}
+
+.psmRow {
+    color: rgb(218, 230, 248);
+    border-radius: 14px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 14px;
+    padding-right: 14px;
+    transition: background 140ms ease, transform 140ms ease, border-color 140ms ease;
+    border: 1px solid transparent;
+}
+
+.psmRow:hover {
+    background:
+        linear-gradient(135deg, rgba(198, 41, 47, 0.14), rgba(47, 103, 208, 0.18)),
+        rgba(255, 255, 255, 0.04);
+    border-color: rgba(120, 178, 248, 0.16);
+    transform: translateX(2px);
+}
+
+.psmSectionTitle {
+    color: rgb(140, 165, 200);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.psmSectionBreak {
+    border-color: rgba(85, 165, 255, 0.12);
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.psmRowTiltSelect {
+    margin-left: 14px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(47, 103, 208, 0.12);
+    border: 1px solid rgba(85, 165, 255, 0.16);
+    color: rgb(138, 194, 255);
+    font-size: 12px;
+}
+
+.psmRowTiltSelect:hover {
+    filter: none;
+    text-decoration: none;
+    border-color: rgba(127, 189, 255, 0.28);
+    background: rgba(47, 103, 208, 0.22);
+}
+
+.psmTiltDropdownRow:hover {
+    background: rgba(47, 103, 208, 0.22);
+}
+
+#psmTiltDropdown {
+    background:
+        linear-gradient(180deg, rgba(13, 21, 38, 0.98), rgba(17, 28, 48, 0.96));
+    border-color: rgba(85, 165, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.34);
+    padding: 6px;
+    z-index: 2000000006;
+}
+
+#psmTiltDropdownBackdrop {
+    z-index: 2000000005;
+}
+
+.psmTiltDropdownRow {
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+/* ── Elevation/tilt buttons ────────────────────────────────────────────── */
+.l2ElevBtn {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(85, 165, 255, 0.14) !important;
+    color: rgb(210, 224, 242) !important;
+}
+
+.l2ElevBtn:hover {
+    filter: brightness(1.15);
+}
+
+.l2ElevBtnSelected {
+    color: #fff !important;
+    background: linear-gradient(135deg, rgba(47, 103, 208, 0.7), rgba(25, 65, 140, 0.7)) !important;
+    border-color: rgba(85, 165, 255, 0.4) !important;
+}
+
+.l2ElevationBtn {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border: 1px solid rgba(85, 165, 255, 0.15) !important;
+    color: rgb(210, 224, 242) !important;
+}
+
+.l2ElevationBtnSelected {
+    color: #fff !important;
+    background: linear-gradient(135deg, rgba(47, 103, 208, 0.72), rgba(25, 65, 140, 0.72)) !important;
+    border-color: rgba(85, 165, 255, 0.42) !important;
+}
+
+/* ── Radio pause/play button ───────────────────────────────────────────── */
+.radioPausePlayBtn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(85, 165, 255, 0.14);
+    color: rgb(210, 224, 242);
+}
+
+/* ── Hurricane archive map control ────────────────────────────────────── */
+#hurricaneArchiveMapControl {
+    background: var(--ww-brand-panel-2);
+    border-color: rgba(47, 103, 208, 0.22);
+    color: rgb(205, 218, 238);
+}
+
+#haMapControlMinimize {
+    background: rgba(47, 103, 208, 0.22);
+}
+
+/* ── Tooltips / attic popup ────────────────────────────────────────────── */
+.attic_popup {
+    background: var(--ww-brand-panel-2);
+    border: 0.75px solid rgba(85, 165, 255, 0.2);
+    color: rgb(205, 220, 240);
+}
+
+.attic_popup:after {
+    border-top-color: var(--ww-brand-panel-2);
+}
+
+.attic_popup:before {
+    border-top-color: rgba(85, 165, 255, 0.2);
+}
+
+/* ── Alert popup (map click popups) ───────────────────────────────────── */
+.alertPopup .mapboxgl-popup-content {
+    background: var(--ww-brand-panel);
+    border: 1px solid rgba(85, 165, 255, 0.16);
+    color: rgb(195, 212, 232);
+}
+
+.alertPopup.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip { border-top-color: var(--ww-brand-panel); }
+.alertPopup.mapboxgl-popup-anchor-top    .mapboxgl-popup-tip { border-bottom-color: var(--ww-brand-panel); }
+.alertPopup.mapboxgl-popup-anchor-left   .mapboxgl-popup-tip { border-right-color: var(--ww-brand-panel); }
+.alertPopup.mapboxgl-popup-anchor-right  .mapboxgl-popup-tip { border-left-color: var(--ww-brand-panel); }
+.alertPopup.mapboxgl-popup-anchor-top-left    .mapboxgl-popup-tip { border-bottom-color: var(--ww-brand-panel); }
+.alertPopup.mapboxgl-popup-anchor-top-right   .mapboxgl-popup-tip { border-bottom-color: var(--ww-brand-panel); }
+.alertPopup.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip { border-top-color: var(--ww-brand-panel); }
+.alertPopup.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip { border-top-color: var(--ww-brand-panel); }
+
+/* ── icon helpers ──────────────────────────────────────────────────────── */
+.icon-selected { color: var(--ww-brand-blue-bright) !important; }
+.icon-blue     { color: var(--ww-brand-blue-bright) !important; }
+
+/* ── Alert text accent ─────────────────────────────────────────────────── */
+.alertTextDescriber { color: var(--ww-brand-blue-bright); }
+
+/* ── Loading screen override to keep brand ink background ─────────────── */
+#loadingLibrariesDiv {
+    background:
+        radial-gradient(circle at 28% 34%, rgba(47, 103, 208, 0.24), transparent 24rem),
+        radial-gradient(circle at 68% 38%, rgba(198, 41, 47, 0.18), transparent 20rem),
+        linear-gradient(180deg, var(--ww-brand-ink) 0%, #090d16 48%, #0d1422 100%);
 }

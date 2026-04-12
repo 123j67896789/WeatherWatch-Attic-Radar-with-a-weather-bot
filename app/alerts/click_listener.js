@@ -22,7 +22,7 @@ function click_listener(e) {
     e.originalEvent.cancelBubble = true;
 
     const renderedFeatures = map.queryRenderedFeatures(e.point);
-    if (renderedFeatures[0] && renderedFeatures[0].layer.id == 'stationSymbolLayer') return;
+    if (renderedFeatures[0] && (renderedFeatures[0].layer.id == 'stationSymbolLayer' || renderedFeatures[0].layer.id == 'stationLabelLayer')) return;
 
     var alertContentObj = {};
     var alreadyAddedAlerts = [];

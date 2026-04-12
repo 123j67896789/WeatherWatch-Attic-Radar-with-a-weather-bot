@@ -48,7 +48,7 @@ function _get_text_url(category, day) {
 }
 
 function _click_listener(e) {
-    if (map.queryRenderedFeatures(e.point)[0].layer.id == "stationSymbolLayer") return;
+    if (map.queryRenderedFeatures(e.point)[0].layer.id == "stationSymbolLayer" || map.queryRenderedFeatures(e.point)[0].layer.id == "stationLabelLayer") return;
     const properties = e.features[0].properties;
 
     var current_info = $('#spcDataInfo').find('b').text();

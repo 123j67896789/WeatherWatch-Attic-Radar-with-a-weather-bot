@@ -9,58 +9,401 @@
     <title>WeatherWatch</title>
     <script type="module" crossorigin src="./assets/index-C1hQBIyv.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-Cjo7-GEX.css">
+    <style>
+      :root {
+        --ww-brand-red: #c6292f;
+        --ww-brand-red-bright: #e1464d;
+        --ww-brand-blue: #2f67d0;
+        --ww-brand-blue-bright: #55a5ff;
+      }
+
+      .attic-ww-badge {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 2147483646;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(7, 10, 18, 0.9), rgba(10, 15, 26, 0.82));
+        border: 1px solid rgba(85, 165, 255, 0.18);
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        pointer-events: none;
+      }
+
+      .attic-ww-mark {
+        position: relative;
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+      }
+
+      .attic-ww-mark::before,
+      .attic-ww-mark::after {
+        content: "";
+        position: absolute;
+        inset: 50% auto auto 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+      }
+
+      .attic-ww-mark::before {
+        width: 100%;
+        height: 100%;
+        box-shadow: inset 0 0 0 2px var(--ww-brand-red);
+      }
+
+      .attic-ww-mark::after {
+        width: 62%;
+        height: 62%;
+        box-shadow:
+          inset 0 0 0 2px var(--ww-brand-blue),
+          0 0 0 5px rgba(47, 103, 208, 0.14);
+      }
+
+      .attic-ww-bolt {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 32%;
+        height: 90%;
+        transform: translate(-50%, -50%) skewX(-22deg) rotate(12deg);
+        clip-path: polygon(56% 0%, 100% 0%, 52% 42%, 82% 42%, 0% 100%, 32% 55%, 2% 55%);
+        background: linear-gradient(180deg, var(--ww-brand-red-bright), var(--ww-brand-red));
+        box-shadow: 0 0 10px rgba(198, 41, 47, 0.2);
+      }
+
+      .attic-ww-badge-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 0.92;
+        font: 900 13px/0.92 Arial, sans-serif;
+        letter-spacing: 0.04em;
+      }
+
+      .attic-ww-red {
+        color: var(--ww-brand-red);
+      }
+
+      .attic-ww-blue {
+        color: var(--ww-brand-blue);
+      }
+
+      body.attic-ww-grid-theme {
+        background:
+          radial-gradient(circle at top left, rgba(47, 103, 208, 0.18), transparent 18rem),
+          radial-gradient(circle at top right, rgba(198, 41, 47, 0.16), transparent 16rem),
+          linear-gradient(180deg, #050912 0%, #09111d 44%, #12233b 100%) !important;
+        color: #edf3ff;
+      }
+
+      body.attic-ww-grid-theme::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 18%),
+          radial-gradient(circle at 10% 0%, rgba(85, 165, 255, 0.18), transparent 22%),
+          radial-gradient(circle at 90% 4%, rgba(198, 41, 47, 0.14), transparent 18%);
+        z-index: 0;
+      }
+
+      body.attic-ww-grid-theme #root,
+      body.attic-ww-grid-theme .page {
+        position: relative;
+        background: transparent !important;
+        color: #edf3ff;
+        z-index: 1;
+      }
+
+      body.attic-ww-grid-theme .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        padding-top: 12px;
+        padding-bottom: 10px;
+        background:
+          radial-gradient(circle at top left, rgba(47, 103, 208, 0.22), transparent 28%),
+          radial-gradient(circle at top right, rgba(198, 41, 47, 0.16), transparent 24%),
+          linear-gradient(180deg, rgba(8, 13, 24, 0.96), rgba(11, 18, 31, 0.93)) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      body.attic-ww-grid-embedded .topbar {
+        display: none !important;
+      }
+
+      body.attic-ww-grid-embedded .page {
+        padding-top: 0 !important;
+      }
+
+      body.attic-ww-grid-theme .tabBar {
+        gap: 10px;
+        padding-top: 8px;
+      }
+
+      body.attic-ww-grid-theme .tabBtn,
+      body.attic-ww-grid-theme .ghostBtn,
+      body.attic-ww-grid-theme .primaryBtn,
+      body.attic-ww-grid-theme .alertsSummaryPill,
+      body.attic-ww-grid-theme .riskQuickBtn,
+      body.attic-ww-grid-theme .riskDaySelectBtn,
+      body.attic-ww-grid-theme .riskOptionPill,
+      body.attic-ww-grid-theme .weatherLink,
+      body.attic-ww-grid-theme .outlookLink {
+        border-radius: 16px !important;
+      }
+
+      body.attic-ww-grid-theme .tabBtn,
+      body.attic-ww-grid-theme .ghostBtn,
+      body.attic-ww-grid-theme .alertsSummaryPill,
+      body.attic-ww-grid-theme .riskQuickBtn,
+      body.attic-ww-grid-theme .riskDaySelectBtn,
+      body.attic-ww-grid-theme .riskOptionPill {
+        border: 1px solid rgba(85, 165, 255, 0.14) !important;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.035)) !important;
+        color: #e5eefc !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      }
+
+      body.attic-ww-grid-theme .tabBtn.active,
+      body.attic-ww-grid-theme .tabBtn[aria-selected="true"],
+      body.attic-ww-grid-theme .tabBtn.is-active,
+      body.attic-ww-grid-theme .primaryBtn,
+      body.attic-ww-grid-theme .alertsSummaryPill.active,
+      body.attic-ww-grid-theme .riskDaySelectBtn.active,
+      body.attic-ww-grid-theme .riskOptionPill.active {
+        background: linear-gradient(135deg, rgba(198, 41, 47, 0.88), rgba(47, 103, 208, 0.94)) !important;
+        border-color: rgba(149, 203, 255, 0.28) !important;
+        color: #fff !important;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          0 14px 28px rgba(15, 32, 58, 0.26);
+      }
+
+      body.attic-ww-grid-theme :is(input, select, textarea) {
+        border: 1px solid rgba(120, 183, 255, 0.14) !important;
+        background: rgba(5, 10, 19, 0.72) !important;
+        color: #edf3ff !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      }
+
+      body.attic-ww-grid-theme :is(input, select, textarea)::placeholder {
+        color: rgba(225, 235, 252, 0.54);
+      }
+
+      body.attic-ww-grid-theme :is(input, select, textarea):focus {
+        outline: none;
+        border-color: rgba(120, 183, 255, 0.28) !important;
+        box-shadow: 0 0 0 1px rgba(120, 183, 255, 0.18), 0 0 0 6px rgba(47, 103, 208, 0.08) !important;
+      }
+
+      body.attic-ww-grid-theme :is(
+        .panel,
+        .panelWide,
+        .detailCard,
+        .alertsListBox,
+        .timeCard,
+        .outlookCard,
+        .websitesCard,
+        .aboutCard,
+        .helpCard,
+        .helpHero,
+        .riskCard,
+        .riskSummaryCard,
+        .riskDayCard,
+        .riskHazardRow,
+        .riskControlCard,
+        .lightningSliderWrap,
+        .lightningTrustItem,
+        .lightningInspectCard,
+        .hazcamsOverlayCard,
+        .reportsDetail,
+        .reportsListBox,
+        .frontsStage,
+        .hazcamsStage,
+        .mapFrame
+      ) {
+        border: 1px solid rgba(85, 165, 255, 0.14) !important;
+        background:
+          radial-gradient(circle at top left, rgba(47, 103, 208, 0.12), transparent 34%),
+          radial-gradient(circle at top right, rgba(198, 41, 47, 0.1), transparent 26%),
+          linear-gradient(180deg, rgba(9, 14, 25, 0.92), rgba(11, 19, 33, 0.9)) !important;
+        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.28) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      body.attic-ww-grid-theme .frontsStageFrame,
+      body.attic-ww-grid-theme .hazcamsStageFrame,
+      body.attic-ww-grid-theme .hazcamsMapFrame {
+        background: #050913 !important;
+      }
+
+      body.attic-ww-grid-theme .weatherLink,
+      body.attic-ww-grid-theme .outlookLink {
+        color: #8ec9ff !important;
+      }
+
+      body.attic-ww-grid-theme .weatherLink:hover,
+      body.attic-ww-grid-theme .outlookLink:hover {
+        color: #cfe6ff !important;
+      }
+
+      body.attic-ww-grid-theme :is(.alertsTitle, .outlooksTitle, .webTitle, .helpCardTitle, .timeCardTitle, .riskHeadline) {
+        color: #f5f8ff !important;
+      }
+
+      body.attic-ww-grid-theme :is(.alertsSub, .riskSummaryMeta, .riskFooter, .aboutText, .helpListItem, .storm-grid-muted) {
+        color: rgba(228, 237, 252, 0.78) !important;
+      }
+
+      body.attic-ww-grid-theme .attic-ww-badge {
+        background:
+          radial-gradient(circle at top left, rgba(47, 103, 208, 0.14), transparent 50%),
+          linear-gradient(180deg, rgba(7, 10, 18, 0.9), rgba(10, 15, 26, 0.82));
+      }
+
+      body.attic-ww-grid-theme .frontsCreditFiles {
+        display: none !important;
+      }
+
+    </style>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="root"></div>
     <script>
       (function () {
-        function requestAtticRadar() {
-          try {
-            if (window.parent && window.parent !== window) {
-              window.parent.postMessage({ type: 'storm-grid-open-radar' }, window.location.origin);
-            }
-          } catch (_) {}
+        var isEmbedded = !!(window.parent && window.parent !== window);
+        var searchParams = new URLSearchParams(window.location.search);
+        var isShellEmbedded = searchParams.get('embedded') === '1';
+
+        function ensureBadge() {
+          document.body.classList.add('attic-ww-grid-theme');
+          if (isShellEmbedded) {
+            document.body.classList.add('attic-ww-grid-embedded');
+          }
+          if (document.querySelector('.attic-ww-badge')) return;
+          var badge = document.createElement('div');
+          badge.className = 'attic-ww-badge';
+          badge.innerHTML =
+            '<span class="attic-ww-mark" aria-hidden="true"><span class="attic-ww-bolt"></span></span>' +
+            '<span class="attic-ww-badge-text">' +
+              '<span class="attic-ww-red">WEATHER</span>' +
+              '<span class="attic-ww-blue">WATCH</span>' +
+            '</span>';
+          document.body.appendChild(badge);
         }
 
-        function isRadarTarget(node) {
-          if (!node || node.nodeType !== 1) return false;
+        function requestParentRoute(type) {
+          if (!isEmbedded) return false;
+          try {
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ type: type }, window.location.origin);
+              return true;
+            }
+          } catch (_) {}
+          return false;
+        }
+
+        function openStandaloneTab(tabKey) {
+          try {
+            var url = new URL(window.location.href);
+            url.searchParams.set('tab', tabKey);
+            window.location.assign(url.toString());
+            return true;
+          } catch (_) {}
+          return false;
+        }
+
+        function classifyTarget(node) {
+          if (!node || node.nodeType !== 1) return '';
           var text = (node.textContent || '').trim().toLowerCase();
           var title = (node.getAttribute('title') || '').trim().toLowerCase();
           var href = (node.getAttribute('href') || '').trim().toLowerCase();
           var aria = (node.getAttribute('aria-label') || '').trim().toLowerCase();
           var dataTab = (node.getAttribute('data-tab') || '').trim().toLowerCase();
-          return text === 'radar' || title === 'radar' || aria === 'radar' || dataTab === 'radar' || href.indexOf('tab=radar') >= 0;
+          if (text === 'radar' || title === 'radar' || aria === 'radar' || dataTab === 'radar' || href.indexOf('tab=radar') >= 0) {
+            return 'storm-grid-open-radar';
+          }
+          if (text === 'fronts' || title === 'fronts' || aria === 'fronts' || dataTab === 'fronts' || href.indexOf('tab=fronts') >= 0) {
+            return 'storm-grid-open-fronts';
+          }
+          return '';
         }
 
         function patchRadarTab() {
+          ensureBadge();
           var targets = Array.prototype.slice.call(document.querySelectorAll('button, a, [role=\"button\"], [data-tab]'));
           targets.forEach(function (target) {
-            if (!isRadarTarget(target)) return;
+            var text = ((target.textContent || '').trim());
+            if (/^Device:/i.test(text)) {
+              if (target.dataset.atticGuidePatched !== '1') {
+                target.dataset.atticGuidePatched = '1';
+                target.textContent = 'Welcome Guide';
+                target.setAttribute('title', 'Open the WeatherWatch welcome guide');
+                if (isEmbedded) {
+                  target.addEventListener('click', function (event) {
+                    if (!requestParentRoute('storm-grid-open-guide')) return;
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+                  }, true);
+                }
+              }
+              return;
+            }
+            var targetType = classifyTarget(target);
+            if (!targetType) return;
             if (target.dataset.atticRadarPatched === '1') return;
 
             target.dataset.atticRadarPatched = '1';
-            if ((target.textContent || '').trim().toLowerCase() === 'radar') {
+            if (targetType === 'storm-grid-open-radar' && (target.textContent || '').trim().toLowerCase() === 'radar') {
               target.textContent = 'Radar Workspace';
+              target.setAttribute('title', 'Open Attic Radar Workspace');
             }
-            target.setAttribute('title', 'Open Attic Radar Workspace');
-            target.addEventListener('click', function (event) {
-              event.preventDefault();
-              event.stopPropagation();
-              event.stopImmediatePropagation();
-              requestAtticRadar();
-            }, true);
+            if (targetType === 'storm-grid-open-fronts') {
+              target.setAttribute('title', 'Open Attic Fronts Workspace');
+            }
+            if (isEmbedded) {
+              target.addEventListener('click', function (event) {
+                if (!requestParentRoute(targetType)) return;
+                event.preventDefault();
+                event.stopPropagation();
+                  event.stopImmediatePropagation();
+                }, true);
+            } else if (targetType === 'storm-grid-open-fronts') {
+              target.addEventListener('click', function (event) {
+                if (!openStandaloneTab('fronts')) return;
+                event.preventDefault();
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+              }, true);
+            }
           });
         }
 
-        document.addEventListener('click', function (event) {
-          var target = event.target && event.target.closest ? event.target.closest('button, a, [role=\"button\"], [data-tab]') : null;
-          if (!isRadarTarget(target)) return;
-          event.preventDefault();
-          event.stopPropagation();
-          event.stopImmediatePropagation();
-          requestAtticRadar();
-        }, true);
+        if (isEmbedded) {
+          document.addEventListener('click', function (event) {
+            var target = event.target && event.target.closest ? event.target.closest('button, a, [role=\"button\"], [data-tab]') : null;
+            var targetType = classifyTarget(target);
+            if (!targetType) return;
+            if (!requestParentRoute(targetType)) return;
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+          }, true);
+        }
 
         var observer = new MutationObserver(function () {
           patchRadarTab();

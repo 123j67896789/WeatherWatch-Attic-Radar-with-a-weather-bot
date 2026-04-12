@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>AtticRadar</title>
+    <title>WeatherWatch</title>
     <meta name="description" content="A clean, simple, but powerful weather toolkit for the web browser. Includes NEXRAD parsing and plotting, doppler velocity dealiasing, weather alerts, real time lightning data, METAR station data, and much more.">
     <link rel="icon" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
@@ -65,8 +65,11 @@
             width: 100%;
             z-index: 500000;
 
-            background: url('./logo.png') no-repeat center fixed, #7b7b7b;
-            background-size: contain;
+            background:
+                radial-gradient(circle at 28% 34%, rgba(47, 103, 208, 0.24), transparent 24rem),
+                radial-gradient(circle at 68% 38%, rgba(198, 41, 47, 0.18), transparent 20rem),
+                linear-gradient(180deg, #040507 0%, #090d16 48%, #0d1422 100%);
+            overflow: hidden;
         }
         #loadingLibrariesDivContent {
             position: absolute;
@@ -76,18 +79,134 @@
             z-index: 500000;
 
             color: rgb(200, 200, 200);
-            background-color: rgba(0, 0, 0, .5);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background:
+                radial-gradient(circle at center, rgba(255, 255, 255, 0.02), transparent 24rem),
+                rgba(0, 0, 0, .34);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
 
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
 
-            /*font-family: 'Abel';*/
             font-size: 50px;
             font-weight: bold;
+        }
+        #loadingLibrariesDiv::before {
+            content: "";
+            position: absolute;
+            inset: -20%;
+            background:
+                radial-gradient(circle, rgba(85, 165, 255, 0.22) 0%, rgba(85, 165, 255, 0) 58%) 20% 30% / 28rem 28rem no-repeat,
+                radial-gradient(circle, rgba(198, 41, 47, 0.18) 0%, rgba(198, 41, 47, 0) 54%) 74% 36% / 24rem 24rem no-repeat;
+            animation: wwNebulaDrift 12s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+        .weatherWatchSplash {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 26px;
+            padding: 28px 36px;
+            border-radius: 28px;
+            background:
+                linear-gradient(180deg, rgba(7, 10, 18, 0.82), rgba(10, 15, 26, 0.62));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 24px 80px rgba(0, 0, 0, 0.48),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            animation: wwSplashSnap 1.45s cubic-bezier(.22,1,.24,1) both;
+        }
+        .weatherWatchSplash::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            background: linear-gradient(90deg, rgba(198, 41, 47, 0.18), rgba(47, 103, 208, 0.18));
+            opacity: 0.5;
+            mix-blend-mode: screen;
+            pointer-events: none;
+        }
+        .weatherWatchSplashText {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+            line-height: 0.9;
+            transform: translateY(6px);
+        }
+        .weatherWatchWord {
+            display: inline-block;
+            font-family: "Arial Black", Impact, sans-serif;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            text-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
+            opacity: 0;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+        }
+        .weatherWatchWordRed {
+            color: #c6292f;
+            animation: wwWeatherDrop 1.2s cubic-bezier(.16,1,.3,1) 0.5s both;
+        }
+        .weatherWatchWordBlue {
+            color: #2f67d0;
+            animation: wwWatchRise 1.2s cubic-bezier(.16,1,.3,1) 1.05s both;
+        }
+        .weatherWatchLogoMark {
+            position: relative;
+            display: inline-block;
+            width: 132px;
+            height: 132px;
+            flex-shrink: 0;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            transform: translate3d(-92px, 0, 0) scale(0.82) rotate(-14deg);
+            filter: drop-shadow(0 0 10px rgba(198, 41, 47, 0.18)) drop-shadow(0 0 18px rgba(47, 103, 208, 0.16));
+        }
+        .weatherWatchSplash .weatherWatchLogoMark {
+            opacity: 0;
+            animation: wwLogoFlyIn 1.25s cubic-bezier(.18,.9,.24,1) 0.12s both;
+        }
+        .weatherWatchLogoRing {
+            position: absolute;
+            inset: 50% auto auto 50%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .weatherWatchLogoRingOuter {
+            width: 92%;
+            height: 92%;
+            border: 7px solid #c6292f;
+            box-shadow: 0 0 32px rgba(198, 41, 47, 0.22);
+            animation: wwRingSpin 8s linear infinite;
+        }
+        .weatherWatchLogoRingInner {
+            width: 58%;
+            height: 58%;
+            border: 7px solid #2f67d0;
+            box-shadow:
+                0 0 0 12px rgba(47, 103, 208, 0.16),
+                0 0 0 24px rgba(47, 103, 208, 0.1);
+            animation: wwRingSpinReverse 10s linear infinite;
+        }
+        .weatherWatchLogoBolt {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 31%;
+            height: 84%;
+            background: linear-gradient(180deg, #e1464d, #c6292f);
+            transform: translate(-50%, -50%) skewX(-22deg) rotate(12deg);
+            clip-path: polygon(56% 0%, 100% 0%, 52% 42%, 82% 42%, 0% 100%, 32% 55%, 2% 55%);
+            box-shadow:
+                0 0 22px rgba(198, 41, 47, 0.36),
+                0 0 44px rgba(198, 41, 47, 0.18);
+            animation: wwBoltFlash 2.8s ease-in-out infinite 1.2s;
         }
         .progress_bar {
             position: absolute;
@@ -103,8 +222,11 @@
             align-items: center;
             text-align: center;
 
-            background-color: rgb(103, 103, 103);
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            overflow: hidden;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36);
         }
         .progress_bar_inner {
             position: absolute;
@@ -113,23 +235,132 @@
             left: 4px;
             /* right: 4px; */
 
-            background-color: rgb(51, 51, 51);
-            border-radius: 10px;
+            background: linear-gradient(90deg, #c6292f, #2f67d0);
+            border-radius: 999px;
+            box-shadow: 0 0 22px rgba(85, 165, 255, 0.22);
         }
         .progress_bar_text {
             position: absolute;
             z-index: 500001;
 
-            color: rgb(205, 205, 205);
-            font-size: 15px;
-            font-style: italic;
+            color: rgb(225, 235, 248);
+            font-size: 14px;
+            font-style: normal;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        @keyframes wwSplashSnap {
+            0% {
+                opacity: 0;
+                transform: scale(0.94);
+            }
+            55% {
+                opacity: 1;
+                transform: scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes wwLogoFlyIn {
+            0% {
+                opacity: 0;
+                transform: translate3d(-92px, 0, 0) scale(0.82) rotate(-14deg);
+            }
+            62% {
+                opacity: 1;
+                transform: translate3d(8px, 0, 0) scale(1.015) rotate(1deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+            }
+        }
+        @keyframes wwWeatherDrop {
+            0% {
+                opacity: 0;
+                transform: translateY(-72px) skewY(-10deg) scaleY(1.18);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(8px) skewY(0deg) scaleY(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) skewY(0deg) scaleY(1);
+            }
+        }
+        @keyframes wwWatchRise {
+            0% {
+                opacity: 0;
+                transform: translateY(78px) skewY(10deg) scaleY(1.18);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(-8px) skewY(0deg) scaleY(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) skewY(0deg) scaleY(1);
+            }
+        }
+        @keyframes wwRingSpin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes wwRingSpinReverse {
+            from { transform: translate(-50%, -50%) rotate(360deg); }
+            to { transform: translate(-50%, -50%) rotate(0deg); }
+        }
+        @keyframes wwBoltFlash {
+            0%, 100% {
+                filter: brightness(1);
+            }
+            40% {
+                filter: brightness(1.08);
+            }
+            50% {
+                filter: brightness(1.24);
+            }
+            60% {
+                filter: brightness(1.08);
+            }
+        }
+        @keyframes wwLogoPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.025);
+            }
+        }
+        @keyframes wwNebulaDrift {
+            0% {
+                transform: translate3d(-1.5%, -1%, 0) scale(1);
+            }
+            100% {
+                transform: translate3d(1.5%, 1%, 0) scale(1.04);
+            }
         }
     </style>
 </head>
 
 <body>
     <div id="loadingLibrariesDiv">
-        <div id="loadingLibrariesDivContent">AtticRadar</div>
+        <div id="loadingLibrariesDivContent">
+            <div class="weatherWatchSplash">
+                <div class="weatherWatchLogoMark" aria-hidden="true">
+                    <span class="weatherWatchLogoRing weatherWatchLogoRingOuter"></span>
+                    <span class="weatherWatchLogoRing weatherWatchLogoRingInner"></span>
+                    <span class="weatherWatchLogoBolt"></span>
+                </div>
+                <div class="weatherWatchSplashText">
+                    <span class="weatherWatchWord weatherWatchWordRed">WEATHER</span>
+                    <span class="weatherWatchWord weatherWatchWordBlue">WATCH</span>
+                </div>
+            </div>
+        </div>
         <div id="loadingLibrariesProgressBar" class="progress_bar">
             <span id="progressBarText" class="progress_bar_text"></span>
             <div id="loadingLibrariesProgressBarInner" class="progress_bar_inner"></div>
@@ -137,6 +368,46 @@
     </div>
 
     <div id="bodyDiv">
+
+    <div id="weatherWatchWelcome" class="weatherWatchWelcomeShell" style="display: none">
+        <div class="weatherWatchWelcomeBackdrop"></div>
+        <div class="weatherWatchWelcomePanel">
+            <div class="weatherWatchWelcomeHeader">
+                <div class="weatherWatchWelcomeBrand">
+                    <div class="stormPagesBrandTitle weatherWatchBrandRow">
+                        <span class="weatherWatchLogoMark weatherWatchLogoMarkCompact" aria-hidden="true">
+                            <span class="weatherWatchLogoRing weatherWatchLogoRingOuter"></span>
+                            <span class="weatherWatchLogoRing weatherWatchLogoRingInner"></span>
+                            <span class="weatherWatchLogoBolt"></span>
+                        </span>
+                        <span class="weatherWatchTitleLockup">
+                            <span class="weatherWatchWord weatherWatchWordRed">WEATHER</span>
+                            <span class="weatherWatchWord weatherWatchWordBlue">WATCH</span>
+                        </span>
+                    </div>
+                    <div class="weatherWatchWelcomeSub">Pick the exact kind of weather session you want, and WeatherWatch will open the right workspace first.</div>
+                </div>
+                <button id="weatherWatchWelcomeClose" class="weatherWatchWelcomeClose" type="button">Skip</button>
+            </div>
+            <div class="weatherWatchWelcomeHero">
+                <div class="weatherWatchWelcomeEyebrow">Personalized Start</div>
+                <div class="weatherWatchWelcomeTitle">What kind of weather work are you doing right now?</div>
+                <div class="weatherWatchWelcomeCopy">
+                    Choose the mission that fits your situation best. Each option below sends you into a different WeatherWatch experience, whether you need live storm coverage, pro radar analysis, training, alerts, forecasting, or guided help.
+                </div>
+                <div class="weatherWatchWelcomeHighlights">
+                    <span class="weatherWatchWelcomeHighlight">Live storm coverage</span>
+                    <span class="weatherWatchWelcomeHighlight">Professional radar workspace</span>
+                    <span class="weatherWatchWelcomeHighlight">Training and guided help</span>
+                </div>
+            </div>
+            <div id="weatherWatchWelcomeBody" class="weatherWatchWelcomeGrid"></div>
+            <div class="weatherWatchWelcomeFooter">
+                <div class="weatherWatchWelcomeFootnote">You can reopen this guide anytime from the top bar if you want a different starting path.</div>
+                <button id="weatherWatchWelcomeExplore" class="weatherWatchWelcomeExplore" type="button">Go to Live Watch</button>
+            </div>
+        </div>
+    </div>
 
     <div id="progress_bar_screen_background">
         <div id="mainProgressBar" class="progress_bar" style="bottom: calc(50% - 15px); box-shadow: 0px 0px 20px 8px rgb(25, 25, 25);">
@@ -209,6 +480,9 @@
             <button id="stormPagesToggle" type="button">Pages</button>
             <button id="stormGridPreviewToggle" type="button">Radar Workspace</button>
         </div>
+        <div id="radarHeaderCenterAction">
+            <button id="radarHeaderPagesBtn" type="button">Other Pages</button>
+        </div>
         <span id="radarInfoSpan" style="display: none">
             <!-- <div style="font-size: 15px"><b>VCP: </b><a id='radarVCP'>None</a></div>
             <div style="font-size: 12px"><sus id='radarStationParent'><i class="fa-solid fa-circle-info" id="radarStationIcon" style="display: none">&nbsp;&nbsp;</i><b id='radarStation'>No Station Selected</b></sus><a id="radarTime"></a></div> -->
@@ -219,8 +493,8 @@
 
     <aside id="stormGridCommandDock" class="stormGridCommandDock">
         <div class="stormGridDockHeader">
-            <div class="stormGridDockEyebrow">Permanent Radar</div>
-            <div class="stormGridDockTitle">Radar Workspace</div>
+            <div class="stormGridDockEyebrow">WeatherWatch Radar</div>
+            <div class="stormGridDockTitle weatherWatchTitleLockup"><span class="weatherWatchWordRed">Radar</span> <span class="weatherWatchWordBlue">Workspace</span></div>
         </div>
         <div class="stormGridDockActions">
             <button class="stormGridDockBtn" type="button" data-storm-grid-action="alerts">Alerts</button>
@@ -254,18 +528,38 @@
     <aside id="stormGridRadarSidebar" class="stormGridRadarSidebar">
         <div class="stormGridRadarSidebarInner">
             <div class="stormGridSidebarCard stormGridSidebarHero">
-                <div class="stormGridSidebarEyebrow">Imported From Storm Chaser Grid</div>
-                <div class="stormGridSidebarTitle">Radar Workspace</div>
+                <div class="stormGridSidebarEyebrow">WeatherWatch Signal Core</div>
+                <div class="stormGridSidebarTitle weatherWatchTitleLockup"><span class="weatherWatchWordRed">Radar</span> <span class="weatherWatchWordBlue">Workspace</span></div>
                 <div id="stormGridSidebarSummary" class="stormGridSidebarMeta">AtticRadar radar context will appear here.</div>
+            </div>
+
+            <div class="stormGridSidebarCard stormGridSidebarProductCard">
+                <div class="stormGridSidebarSectionTitle">Radar Mode</div>
+                <button id="stormGridProductTrigger" class="stormGridProductTrigger" type="button">
+                    <span class="stormGridProductTriggerLabel">Product</span>
+                    <span id="stormGridProductText" class="stormGridProductTriggerValue">Reflectivity</span>
+                    <span id="stormGridProductMeta" class="stormGridProductTriggerMeta">Choose a radar product</span>
+                </button>
+                <div class="stormGridProductSubRow">
+                    <div class="stormGridMiniStat">
+                        <span class="stormGridMiniStatLabel">Time</span>
+                        <span id="stormGridProductTime" class="stormGridMiniStatValue">Waiting for sweep</span>
+                    </div>
+                    <button id="stormGridProductMenuBtn" class="stormGridToolbarBtn stormGridToolbarBtn-accent" type="button">
+                        Change Mode
+                    </button>
+                </div>
             </div>
 
             <div class="stormGridSidebarCard">
                 <div class="stormGridSidebarSectionTitle">Radar Actions</div>
                 <div class="stormGridToolbarRow">
-                    <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="alerts">Warnings</button>
                     <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="stations">Stations</button>
+                    <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="alerts">Alerts</button>
+                    <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="metar">METAR</button>
+                    <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="probe">Probe</button>
                     <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="draw">Draw</button>
-                    <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="settings">Menu</button>
+                    <button class="stormGridToolbarBtn" type="button" data-storm-grid-action="settings">Settings</button>
                 </div>
             </div>
 
@@ -313,11 +607,21 @@
         <div class="stormPagesPanel">
             <div class="stormPagesTopbar">
                 <div class="stormPagesBrand">
-                    <div class="stormPagesBrandTitle">WeatherWatch</div>
+                    <div class="stormPagesBrandTitle weatherWatchBrandRow">
+                        <span class="weatherWatchLogoMark weatherWatchLogoMarkCompact" aria-hidden="true">
+                            <span class="weatherWatchLogoRing weatherWatchLogoRingOuter"></span>
+                            <span class="weatherWatchLogoRing weatherWatchLogoRingInner"></span>
+                            <span class="weatherWatchLogoBolt"></span>
+                        </span>
+                        <span class="weatherWatchTitleLockup">
+                            <span class="weatherWatchWord weatherWatchWordRed">WEATHER</span>
+                            <span class="weatherWatchWord weatherWatchWordBlue">WATCH</span>
+                        </span>
+                    </div>
                     <div id="stormPagesNow" class="stormPagesBrandSub">Now: Radar</div>
                 </div>
                 <div class="stormPagesHeaderActions">
-                    <button class="stormPagesHeaderBtn" type="button">Device: PC</button>
+                    <button class="stormPagesHeaderBtn" id="weatherWatchGuideBtn" type="button">Welcome Guide</button>
                     <button class="stormPagesHeaderBtn" type="button">SFX</button>
                     <button class="stormPagesHeaderBtn" type="button">Draw</button>
                     <button class="stormPagesHeaderBtn" type="button">Live Panel</button>
@@ -754,9 +1058,13 @@
                         <span class="colortable_menu_text">GR2Analyst</span>
                         <div class="colortable_menu_image_preview" id="REF4_colortable_preview"></div>
                     </div>
-                    <div class="atticRadarMenuRow colortableRow armrWide armrBottom" id="armrREF5ColortableBtn" name="REF5">
+                    <div class="atticRadarMenuRow colortableRow armrWide armrMiddle" id="armrREF5ColortableBtn" name="REF5">
                         <span class="colortable_menu_text">RadarOmega</span>
                         <div class="colortable_menu_image_preview" id="REF5_colortable_preview"></div>
+                    </div>
+                    <div class="atticRadarMenuRow colortableRow armrWide armrBottom" id="armrREF6ColortableBtn" name="REF6">
+                        <span class="colortable_menu_text">WeatherWatch</span>
+                        <div class="colortable_menu_image_preview" id="REF6_colortable_preview"></div>
                     </div>
                     </span>
 
@@ -1084,10 +1392,6 @@
         var sum = [];
         var already_loaded = 0;
         function _progress_download(url, byte_length, total_byte_length, callback) {
-            const split = url.split('/');
-            const filename = split[split.length - 1];
-            document.getElementById('progressBarText').innerHTML = filename;
-
             var req = new XMLHttpRequest();
 
             var temp = 0;
@@ -1196,6 +1500,13 @@
             })
         }
 
+        const splashStartedAt = Date.now();
+        const minimumSplashDurationMs = 3000;
+        const loadingMessageDurationMs = 2000;
+        const progressBarTextElem = document.getElementById('progressBarText');
+
+        progressBarTextElem.textContent = 'Load weather data';
+
         document.getElementById('bodyDiv').style.display = 'none';
         load_all_libraries([
             ['js', 'https://code.jquery.com/jquery-3.2.1.min.js', 86659],
@@ -1268,8 +1579,24 @@
 
             ['js', './dist/bundle.js', 0],
         ], () => {
-            document.getElementById('bodyDiv').style.display = 'block';
-            document.getElementById('loadingLibrariesDiv').style.display = 'none';
+            _set_progress_bar_width(100);
+
+            const finishBoot = () => {
+                document.getElementById('bodyDiv').style.display = 'block';
+                document.getElementById('loadingLibrariesDiv').style.display = 'none';
+            };
+
+            const showLoadedThenEnter = () => {
+                progressBarTextElem.textContent = 'Loaded...';
+
+                const elapsedAfterLoaded = Date.now() - splashStartedAt;
+                const remainingAfterLoaded = Math.max(0, minimumSplashDurationMs - elapsedAfterLoaded);
+                window.setTimeout(finishBoot, remainingAfterLoaded);
+            };
+
+            const elapsed = Date.now() - splashStartedAt;
+            const loadingMessageRemaining = Math.max(0, loadingMessageDurationMs - elapsed);
+            window.setTimeout(showLoadedThenEnter, loadingMessageRemaining);
         })
     </script>
 </body>

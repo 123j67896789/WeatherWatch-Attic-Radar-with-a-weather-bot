@@ -29,6 +29,7 @@ function load() {
     require('../menu/atticRadarMenu');
     require('../menu/storm_grid_preview');
     require('../menu/storm_pages');
+    require('../menu/welcome_screen');
 
     // load the productSelectionMenu helper file
     require('../menu/productSelectionMenu');
